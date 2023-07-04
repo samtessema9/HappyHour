@@ -1,0 +1,29 @@
+.gitignore
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore compiled code or build artifacts
+dist/
+build/
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.development
+.env.production
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore dependency lock files
+yarn.lock
+package-lock.json
+
+# Ignore sensitive or personal files
+config.json
+secrets.txt
