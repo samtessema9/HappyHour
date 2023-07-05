@@ -1,31 +1,44 @@
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
 
-const Map = () => {
-    const {isLoaded} = useLoadScript({
-        googleMapsApiKey: process.env.API_KEY
-    });
-
-    if (!isLoaded) return <p>Loading...</p>;
-
-    const center = {
+const Map = ({location}) => {
+    const [coordinates, setCoordinates] = useState({
         lat: 47.614010,
         lng: -122.342247,
-    };
+    });
+
+    const {isLoaded} = useLoadScript({
+        googleMapsApiKey: import.meta.env.VITE_API_KEY
+    });
+
+    useEffect(() => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`
+        axios.get(url).then(response => {
+            console.log(response.data)
+            setCoordinates({
+                lat: parseFloat(response.data[0].lat),
+                lng: parseFloat(response.data[0].lon)
+            })
+        })
+    }, [])
+
+    if (!isLoaded) return <p>Loading...</p>
 
     return (
         <GoogleMap
             zoom={11}
-            center={center}
+            center={coordinates}
             mapContainerClassName='map-container'
         >
             <Marker 
-                position={{lat: 47.614010, lng: -122.342247}} 
-                icon={{
-                    scaledSize: new window.google.maps.Size(40, 40),
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(20, 40),
-                }}
+                position={coordinates} 
+                // icon={{
+                //     scaledSize: new window.google.maps.Size(40, 40),
+                //     origin: new window.google.maps.Point(0, 0),
+                //     anchor: new window.google.maps.Point(20, 40),
+                // }}
             />
         </GoogleMap>
     )

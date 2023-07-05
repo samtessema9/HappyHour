@@ -14,7 +14,7 @@ function App() {
       <Navbar />
       <hr />
       {/* <Home /> */}
-      <Details bar={{name: "Bar 6", hours: ["4:00", "6:00pm"], img: "https://infatuation.imgix.net/NYC_Bandits_PR.jpg"}} />
+      <Details bar={{name: "Bar 6", hours: ["4:00", "6:00pm"], img: "https://infatuation.imgix.net/NYC_Bandits_PR.jpg", address: "3548 W Belfair Valley Rd, Bremerton, WA 98312"}} />
     </>
   )
 }

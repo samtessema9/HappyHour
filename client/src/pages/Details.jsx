@@ -11,7 +11,7 @@ const Details = ({bar}) => {
                 <StarRating />
                 <p>{bar.hours[0]} - {bar.hours[1]}</p>
             </div>
-            <Map />
+            <Map location={bar.address} />
         </div>
     );
 }
