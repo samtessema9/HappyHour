@@ -5,6 +5,11 @@ const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 3001
 
+const connectToDB = require('./config/db');
+connectToDB()
+
+// app.use('/venues', require('./routes/venueRoutes'));
+
 // Defining a catch-all route that handles all incoming requests
 app.use('*', (req, res) => {
     console.log(`request made form ip: ${req.ip}`)
