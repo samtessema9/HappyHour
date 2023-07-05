@@ -1,8 +1,16 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0px;
   text-align: center;
+  
+}
+
+h2 {
+  font-family: 'Lobster', cursive;
+  font-size: 2em;
+  color: red;
+  margin: 10px;
 }
 
 

@@ -31,3 +31,25 @@
 #cards div {
     width: 285px;
 }
+
+#details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    box-sizing: border-box;
+    padding: 0px 40px;
+
+}
+
+#details h2 {
+    color: black;
+    font-size: 2em;
+}
+
+#info {
+    flex: 0.75;
+}
+
+#info img {
+    width: 100%;
+}

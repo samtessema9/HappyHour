@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import Home from './pages/Home'
+import Map from './components/Map'
+import Details from './pages/Details'
+import Navbar from './components/Navbar'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -8,7 +11,10 @@ function App() {
   return (
     <>
       <h2>Happy Hour</h2>
-      <Home />
+      <Navbar />
+      <hr />
+      {/* <Home /> */}
+      <Details bar={{name: "Bar 6", hours: ["4:00", "6:00pm"], img: "https://infatuation.imgix.net/NYC_Bandits_PR.jpg"}} />
     </>
   )
 }

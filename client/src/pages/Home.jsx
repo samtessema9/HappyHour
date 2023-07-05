@@ -17,7 +17,7 @@ const Home = () => {
 
     return ( 
         <div id="container">
-            <Navbar />
+            {/* <Navbar /> */}
             <div id="search">
                 <h2></h2>
             </div>
