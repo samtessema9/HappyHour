@@ -1,21 +1,21 @@
 import {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import primaryContext from '../context/primaryContext'
+import PrimaryContext from '../context/PrimaryContext'
 import StarRating from './Rating';
 import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
-const venueCard = ({venue}) => {
-  const {setCurrentVenue} = useContext(primaryContext);
+const VenueCard = ({venue}) => {
+  // const {setCurrentVenue} = useContext(PrimaryContext);
   const navigate = useNavigate()
 
   const handleClick = (e) => {
-      setCurrentVenue(venue);
+      // setCurrentVenue(venue);
       navigate('/details')
   }
 
 
   return (
-    <Card onClick={handleClick}>
+    <Card >
       <CardMedia
         component="img"
         alt="Image Alt Text"
@@ -29,11 +29,11 @@ const venueCard = ({venue}) => {
         <Typography variant="body2" color="text.secondary">
           <StarRating />
           <p>{venue.hours[0]} - {venue.hours[1]}</p>
-          <Button variant="text" color="primary">Details</Button>
+          <Button variant="text" color="primary" onClick={handleClick}>Details</Button>
         </Typography>
       </CardContent>
     </Card>
   );
 };
 
-export default venueCard;
+export default VenueCard;

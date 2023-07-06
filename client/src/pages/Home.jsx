@@ -1,7 +1,9 @@
 import {useState} from 'react';
 import './index.css'
-import venueCard from '../components/Card';
+import VenueCard from '../components/Card';
 import venues from '../assets/testData'
+
+console.log(venues)
 
 const Home = () => {
 
@@ -13,7 +15,7 @@ const Home = () => {
             </div>
             <div id="cards">
                 {venues.map(venue => {
-                    return <venueCard venue={venue}/>
+                    return <VenueCard venue={venue} key={venue.address}/>
                 })}
             </div>
         </div>
