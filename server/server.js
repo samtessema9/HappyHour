@@ -8,6 +8,10 @@ const port = process.env.PORT || 3001
 const connectToDB = require('./config/db');
 connectToDB()
 
+const cors = require('cors');
+
+app.use(cors());
+
 app.use(express.json());
 
 app.use('/venues', require('./routes/venueRoutes'));

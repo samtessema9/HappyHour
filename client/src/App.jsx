@@ -12,11 +12,10 @@ function App() {
 
   return (
     <>
-      <h2>Happy Hour</h2>
-      <Navbar />
-      <hr />
-      
       <Router>
+        <h2>Happy Hour</h2>
+        <Navbar />
+        <hr />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/details" element={<Details bar={venues[0]} />} />

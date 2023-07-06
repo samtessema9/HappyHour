@@ -1,18 +1,21 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import Map from "../components/Map";
 import StarRating from '../components/Rating';
+import { PrimaryContext } from '../context/PrimaryContext';
 
-const Details = ({bar}) => {
+const Details = () => {
+    const {currentVenue} = useContext(PrimaryContext)
+
     return ( 
         <div id="details">
             <div id="info">
-                <img src={bar.img} />
-                <h2>{bar.name}</h2>
-                <StarRating />
-                <p>{bar.hours[0]} - {bar.hours[1]}</p>
-                <p>{bar.address}</p>
+                <img src={currentVenue.img} />
+                <h1>{currentVenue.name}</h1>
+                <StarRating rating={currentVenue.rating}/>
+                <p>{currentVenue.hours.start} - {currentVenue.hours.end}</p>
+                <p>{currentVenue.address}</p>
             </div>
-            <Map location={bar.address} />
+            <Map location={currentVenue.address} />
         </div>
     );
 }

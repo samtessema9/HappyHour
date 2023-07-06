@@ -1,15 +1,15 @@
 import {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import PrimaryContext from '../context/PrimaryContext'
+import { PrimaryContext } from '../context/PrimaryContext';
 import StarRating from './Rating';
 import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
 const VenueCard = ({venue}) => {
-  // const {setCurrentVenue} = useContext(PrimaryContext);
+  const {setCurrentVenue} = useContext(PrimaryContext);
   const navigate = useNavigate()
 
   const handleClick = (e) => {
-      // setCurrentVenue(venue);
+      setCurrentVenue(venue);
       navigate('/details')
   }
 
@@ -27,8 +27,8 @@ const VenueCard = ({venue}) => {
           {venue.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <StarRating />
-          <p>{venue.hours[0]} - {venue.hours[1]}</p>
+          <StarRating rating={venue.rating} />
+          <p>{venue.hours.start} - {venue.hours.end}</p>
           <Button variant="text" color="primary" onClick={handleClick}>Details</Button>
         </Typography>
       </CardContent>

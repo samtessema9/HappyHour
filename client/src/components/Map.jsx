@@ -16,7 +16,8 @@ const Map = ({location}) => {
     useEffect(() => {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`
         axios.get(url).then(response => {
-            console.log(response.data)
+            console.log(response.data[0].lat)
+            console.log(response.data[0].lon)
             setCoordinates({
                 lat: parseFloat(response.data[0].lat),
                 lng: parseFloat(response.data[0].lon)
@@ -28,7 +29,7 @@ const Map = ({location}) => {
 
     return (
         <GoogleMap
-            zoom={11}
+            zoom={14}
             center={coordinates}
             mapContainerClassName='map-container'
         >

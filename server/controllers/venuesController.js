@@ -21,7 +21,7 @@ const addVenue = async (req, res) => {
     try {
         const venue = req.body
         const createdVenue = Venues.create(venue)
-        res.json(createdVenue)
+        res.send('Succesfully created venue');
     }
     catch (err) {
         res.send(`could not create venue`)
