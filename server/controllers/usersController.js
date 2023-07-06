@@ -1,13 +1,16 @@
 const Users = require('../models/Users');
+const bcrypt = require('bcrypt');
 
 const getUsers = async (req, res) => {
-    res.send('all the Users');
+    const users = await Users.find()
+    res.json(users);
 }
 
 
 const getUserById = async (req, res) => {
     try {
-        res.send(`Here's User id number: ${req.params.id}`);
+        const user = await Users.findById(req.params.id);
+        res.json(user);
     }
     catch (err) {
         res.send(`could not find user.`)
@@ -18,7 +21,14 @@ const getUserById = async (req, res) => {
 const addUser = async (req, res) => {
     try {
         const user = req.body
-        res.send(`Created User: ${user}`)
+        
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(user.password, salt)
+        user.password = hashedPassword;
+
+        const newUser = await Users.create(user)
+
+        res.json({newUser})
     }
     catch (err) {
         res.send(`could not create user.`)

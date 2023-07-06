@@ -8,6 +8,8 @@ const port = process.env.PORT || 3001
 const connectToDB = require('./config/db');
 connectToDB()
 
+app.use(express.json());
+
 app.use('/venues', require('./routes/venueRoutes'));
 
 app.use('/users', require('./routes/userRoutes'));
