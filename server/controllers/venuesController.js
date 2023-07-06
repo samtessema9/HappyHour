@@ -1,13 +1,15 @@
 const Venues = require('../models/Venues');
 
 const getVenues = async (req, res) => {
-    res.send('all the venues');
+    const venues = await Venues.find();
+    res.json(venues);
 }
 
 
 const getVenueById = async (req, res) => {
     try {
-        res.send(`Here's venue id number: ${req.params.id}`);
+        const venue = await Venues.findById(req.params.id);
+        res.json(venue);
     }
     catch (err) {
         res.send(`could not find venue`)
@@ -18,7 +20,8 @@ const getVenueById = async (req, res) => {
 const addVenue = async (req, res) => {
     try {
         const venue = req.body
-        res.send(`Created venue: ${venue}`)
+        const createdVenue = Venues.create(venue)
+        res.json(createdVenue)
     }
     catch (err) {
         res.send(`could not create venue`)
@@ -27,7 +30,9 @@ const addVenue = async (req, res) => {
 
 const editVenue = async (req, res) => {
     try {
-        res.send(`edited venue: ${req.params.id}`)
+        const updates = req.body
+        const updatedVenue = await Venues.findByIdAndUpdate(req.params.id, updates, {new: true})
+        res.json(updatedVenue)
     }
     catch (err) {
         res.send(`could not edit venue`)
@@ -37,7 +42,8 @@ const editVenue = async (req, res) => {
 
 const deleteVenue = async (req, res) => {
     try {
-        res.send(`deleted venue: ${req.params.id}`)
+        const deletedVenue = await Venues.findByIdAndDelete(req.params.id)
+        res.json(deletedVenue)
     }
     catch (err) {
         res.send(`could not delete venue`)

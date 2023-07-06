@@ -37,7 +37,9 @@ const addUser = async (req, res) => {
 
 const editUser = async (req, res) => {
     try {
-        res.send(`edited User: ${req.params.id}`)
+        const updates = req.body
+        const updatedUser = await Users.findByIdAndUpdate(req.params.id, updates, {new: true})
+        res.json(updatedUser)
     }
     catch (err) {
         res.send(`could not edit user.`)
@@ -47,7 +49,8 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        res.send(`deleted User: ${req.params.id}`)
+        const deletedUser = await Venues.findByIdAndDelete(req.params.id)
+        res.json(deletedUser)
     }
     catch (err) {
         res.send(`could not delete user.`)

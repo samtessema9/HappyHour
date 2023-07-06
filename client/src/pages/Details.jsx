@@ -10,6 +10,7 @@ const Details = ({bar}) => {
                 <h2>{bar.name}</h2>
                 <StarRating />
                 <p>{bar.hours[0]} - {bar.hours[1]}</p>
+                <p>{bar.address}</p>
             </div>
             <Map location={bar.address} />
         </div>
