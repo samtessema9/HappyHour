@@ -8,7 +8,9 @@ const port = process.env.PORT || 3001
 const connectToDB = require('./config/db');
 connectToDB()
 
-// app.use('/venues', require('./routes/venueRoutes'));
+app.use('/venues', require('./routes/venueRoutes'));
+
+app.use('/users', require('./routes/userRoutes'));
 
 // Defining a catch-all route that handles all incoming requests
 app.use('*', (req, res) => {

@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import './index.css'
-import Navbar from '../components/Navbar';
-import CustomCard from '../components/Card';
+import venueCard from '../components/Card';
 import venues from '../assets/testData'
 
 const Home = () => {
@@ -13,8 +12,8 @@ const Home = () => {
                 <h2></h2>
             </div>
             <div id="cards">
-                {venues.map(location => {
-                    return <CustomCard name={location.name} hours={location.hours} img={location.img}/>
+                {venues.map(venue => {
+                    return <venueCard venue={venue}/>
                 })}
             </div>
         </div>

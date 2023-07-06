@@ -1,23 +1,34 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import primaryContext from '../context/primaryContext'
 import StarRating from './Rating';
 import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
-const CustomCard = ({img, name, hours}) => {
+const venueCard = ({venue}) => {
+  const {setCurrentVenue} = useContext(primaryContext);
+  const navigate = useNavigate()
+
+  const handleClick = (e) => {
+      setCurrentVenue(venue);
+      navigate('/details')
+  }
+
+
   return (
-    <Card>
+    <Card onClick={handleClick}>
       <CardMedia
         component="img"
         alt="Image Alt Text"
         height="200"
-        image={img}
+        image={venue.img}
       />
       <CardContent>
         <Typography variant="h5" component="div">
-          {name}
+          {venue.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <StarRating />
-          <p>{hours[0]} - {hours[1]}</p>
+          <p>{venue.hours[0]} - {venue.hours[1]}</p>
           <Button variant="text" color="primary">Details</Button>
         </Typography>
       </CardContent>
@@ -25,4 +36,4 @@ const CustomCard = ({img, name, hours}) => {
   );
 };
 
-export default CustomCard;
+export default venueCard;

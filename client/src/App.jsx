@@ -1,22 +1,28 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import primaryContext from './context/primaryContext'
 import './App.css'
 import Home from './pages/Home'
-import Map from './components/Map'
 import Details from './pages/Details'
 import Navbar from './components/Navbar'
 import venues from './assets/testData'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {currentVenue} = useContext(primaryContext);
 
   return (
     <>
       <h2>Happy Hour</h2>
       <Navbar />
       <hr />
-      {/* <Home /> */}
-      <Details bar={venues[5]} />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={<Home />} />
+          <Route path="/about" component={<Details bar={currentVenue} />} />
+        </Switch>
+      </Router>
     </>
+        
   )
 }
 
