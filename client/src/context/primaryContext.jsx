@@ -8,9 +8,15 @@ const PrimaryContextProvider = ({children}) => {
     const [venues, setVenues] = useState([])
     const [currentVenue, setCurrentVenue] = useState({})
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    const [loggedInUser, setLoggedInUser] = useState({})
+
     let stateObject = {
         venues, setVenues,
-        currentVenue, setCurrentVenue
+        currentVenue, setCurrentVenue,
+        isLoggedIn, setIsLoggedIn,
+        loggedInUser, setLoggedInUser
     }
 
     return (

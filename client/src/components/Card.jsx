@@ -13,7 +13,6 @@ const VenueCard = ({venue}) => {
       navigate('/details')
   }
 
-
   return (
     <Card >
       <CardMedia

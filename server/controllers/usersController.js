@@ -1,5 +1,11 @@
 const Users = require('../models/Users');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler')
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET)
+  }
 
 const getUsers = async (req, res) => {
     const users = await Users.find()
@@ -20,7 +26,13 @@ const getUserById = async (req, res) => {
 
 const addUser = async (req, res) => {
     try {
-        const user = req.body
+        const {userName, password, name} = req.body
+
+        const user = await Users.find({userName})
+
+        if (user) {
+            res.json({error: 'user already exists'}).status(400)
+        }
         
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(user.password, salt)
@@ -28,12 +40,40 @@ const addUser = async (req, res) => {
 
         const newUser = await Users.create(user)
 
-        res.json({newUser})
+        res.json({user: newUser})
     }
     catch (err) {
         res.send(`could not create user.`)
     }
 }
+
+const loginUser = asyncHandler( async (req, res) => {
+    try {
+        // console.log(req.body)
+        const {userName, password} = req.body
+  
+        const user = await Users.findOne({userName: userName})
+    
+        if (!user) {
+            return res.json({error: "User not found"}).status(404)
+        }
+    
+        const correctPassword = await bcrypt.compare(password, user.password)
+
+        if (!correctPassword) {
+            return res.json({error: "Incorrect password"}).status(404)
+        } 
+
+        res.json({
+            user: user,
+            token: generateToken(user._id)
+        })
+    }
+    catch (err) {
+        res.json({error: err.message}).status(400)
+    }
+
+})
 
 const editUser = async (req, res) => {
     try {
@@ -62,6 +102,7 @@ module.exports = {
     getUsers,
     getUserById,
     addUser,
+    loginUser,
     editUser,
     deleteUser
 }

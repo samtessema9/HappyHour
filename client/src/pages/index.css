@@ -53,3 +53,8 @@
 #info img {
     width: 100%;
 }
+
+.error {
+    color: red;
+    margin-top: 2em;
+}
