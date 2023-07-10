@@ -58,3 +58,8 @@
     color: red;
     margin-top: 2em;
 }
+
+.signInError {
+    color: red;
+    display: block;
+}

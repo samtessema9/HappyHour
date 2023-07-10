@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from '../context/PrimaryContext';
 import axios from 'axios';
@@ -34,6 +34,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const SignIn = () => {
+  const navigate = useNavigate()
+  const [error, setError] = useState('')
 
   const {setLoggedInUser} = useContext(PrimaryContext)
 
@@ -52,8 +54,16 @@ const SignIn = () => {
     
     if (response.data.error) {
         console.log('error')
+        setError('Invalid Credentials!')
     } else {
         console.log('success')
+        setLoggedInUser(response.data.user)
+        setError('')
+        navigate('/')
+        setFormData({
+          userName: '',
+          password: ''
+        })
     }
   };
 
@@ -106,6 +116,7 @@ const SignIn = () => {
                 [e.target.name]: e.target.value
               })}
             />
+            {error.length > 0 && <span class="signInError">{error}</span>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

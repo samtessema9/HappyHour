@@ -78,13 +78,25 @@ export default function SignUp() {
         const invalidForm = validateForm(formData)
 
         if (!Object.keys(invalidForm).length > 0) {
-            delete formData.confirmPassword
-            const response = await axios({
-                url: 'http://localhost:3001/users/register',
-                method: 'POST',
-                data: formData
-            })
-            console.log(response.data)
+            try {
+                delete formData.confirmPassword
+                const response = await axios({
+                    url: 'http://localhost:3001/users/register',
+                    method: 'POST',
+                    data: formData
+                })
+                console.log(response.data)
+                setFormData({
+                    name: '',
+                    userName: '',
+                    password: '',
+                    confirmPassword: ''
+                })
+                setErrors({})
+            } catch (err) {
+                
+            }
+
         } else {
             setErrors(invalidForm)
         }
@@ -113,6 +125,7 @@ export default function SignUp() {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                     <TextField
+                        error
                         autoComplete="name"
                         name="name"
                         required
@@ -121,6 +134,7 @@ export default function SignUp() {
                         label="Name"
                         autoFocus
                         onChange={handleChange}
+                        // {...(errors.name) ? error: null}
                     />
                     {errors.name && <span class="error">{errors.name}</span>}
                     </Grid>

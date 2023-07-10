@@ -31,7 +31,7 @@ const addUser = async (req, res) => {
         const user = await Users.find({userName})
 
         if (user) {
-            res.json({error: 'user already exists'}).status(400)
+            return res.status(400).json({error: 'user already exists'})
         }
         
         const salt = await bcrypt.genSalt(10)

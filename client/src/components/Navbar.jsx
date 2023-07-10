@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { PrimaryContext } from '../context/PrimaryContext';
 import { useNavigate } from 'react-router-dom';
 import './index.css'
 
 const Navbar = () => {
     const navigate = useNavigate()
 
+    const {loggedInUser} = useContext(PrimaryContext)
 
     return ( 
         <div id="navbar">
@@ -15,7 +17,8 @@ const Navbar = () => {
             <div id="buttons">
                 <button>Add Venue</button>
                 <button>About</button>
-                <button onClick={() => {navigate('/signIn')}}>Sign In</button>
+                {Object.keys(loggedInUser).length > 0 ? <p>Hey {loggedInUser.name}</p> : <button onClick={() => {navigate('/signIn')}}>Sign In</button>}
+                
             </div>
         </div>
      );
