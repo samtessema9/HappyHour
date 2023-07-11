@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from "../context/primaryContext";
+import "./index.css"
 
 const User = () => {
 
@@ -54,11 +55,15 @@ const User = () => {
       </ListItem>
       <Divider variant="inset" component="li" />
       <Button
+        style={{marginTop: "2em"}}
+        variant='contained'
+        
         onClick={() => {
             localStorage.clear();
             setIsLoggedIn(false)
             navigate('/')
         }}
+        
       >
         Logout
       </Button>

@@ -14,7 +14,7 @@ import AddVenue from './pages/AddVenue';
 
 
 function App() {
-  const {setLoggedInUser} = useContext(PrimaryContext);
+  const {setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
 
   useEffect(() => {
     const getUser = async (token) => {
@@ -27,6 +27,7 @@ function App() {
         }
       })
       const user = response.data
+      setIsLoggedIn(true)
       setLoggedInUser(user)
     }
 

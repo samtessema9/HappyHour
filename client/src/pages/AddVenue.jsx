@@ -80,7 +80,7 @@ const AddVenue = () => {
             required
             id="startTime"
             name="start"
-            label="start time"
+            label="start time (00:00)"
             fullWidth
             autoComplete="00:00"
             variant="standard"
@@ -93,7 +93,7 @@ const AddVenue = () => {
             required
             id="endTime"
             name="end"
-            label="end time"
+            label="end time (00:00pm)"
             fullWidth
             autoComplete="00:00pm"
             variant="standard"
