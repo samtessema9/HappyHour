@@ -7,7 +7,7 @@ import './index.css'
 const Navbar = () => {
     const navigate = useNavigate()
 
-    const {loggedInUser} = useContext(PrimaryContext)
+    const {isLoggedIn, loggedInUser} = useContext(PrimaryContext)
 
     return ( 
         <div id="navbar">
@@ -18,7 +18,7 @@ const Navbar = () => {
             <div id="buttons">
                 <button onClick={() => {navigate('/addVenue')}}>Add Venue</button>
                 <button>About</button>
-                {Object.keys(loggedInUser).length > 0 ? 
+                {isLoggedIn ? 
                     <Button
                         onClick={() => {navigate('/user')}}
                     >

@@ -37,7 +37,7 @@ const SignIn = () => {
   const navigate = useNavigate()
   const [error, setError] = useState('')
 
-  const {setLoggedInUser} = useContext(PrimaryContext)
+  const {setLoggedInUser, isLoggedIn, setIsLoggedIn} = useContext(PrimaryContext)
 
   const [formData, setFormData] = useState({
     userName: '',
@@ -58,6 +58,7 @@ const SignIn = () => {
     } else {
         console.log(response.data)
         setLoggedInUser(response.data.user)
+        setIsLoggedIn(true)
         localStorage.setItem('token', response.data.token)
         setError('')
         setFormData({

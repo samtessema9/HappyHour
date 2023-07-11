@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import User from './components/User';
 import AddVenue from './pages/AddVenue';
 
+
 function App() {
   const {setLoggedInUser} = useContext(PrimaryContext);
 

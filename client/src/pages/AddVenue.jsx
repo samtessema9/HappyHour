@@ -1,128 +1,190 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './AddressForm';
-// import PaymentForm from './PaymentForm';
-// import Review from './Review';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+import {useState} from 'react';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
+import axios from 'axios';
+import './index.css'
 
 const AddVenue = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+  const [formData, setFormData] = useState({
+      name: '',
+      address1: '',
+      city: '',
+      state: '',
+      zip: '',
+      img: '',
+      hours: {
+        start: '',
+        end: ''
+      }
+  })
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    if (name !== 'start' && name !== 'end') {
+      setFormData({
+        ...formData,
+        [name]: value
+      })
+    } else {
+      setFormData({
+        ...formData,
+        hours: {
+          ...formData.hours,
+          [name]: value
+        }
+      })
+    }
+    
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formattedData = {
+      name: formData.name,
+      img: formData.img,
+      hours: formData.hours,
+      address: `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`
+    }
+
+    const response = await axios({
+      url: 'http://localhost:3001/venues',
+      method: 'POST',
+      data: formattedData
+    })
+
+    console.log(response.data)
+
+  }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {getStepContent(activeStep)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                )}
-
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                </Button>
-              </Box>
-            </React.Fragment>
-          )}
-        </Paper>
-        <Copyright />
-      </Container>
-    </ThemeProvider>
+    <form id="add-form" onSubmit={handleSubmit}>
+      <h3>Add Venue</h3>
+      <Grid container spacing={3}>
+        <Grid item xs={12} >
+          <TextField
+            required
+            id="name"
+            name="name"
+            label="Name of Venue"
+            fullWidth
+            autoComplete="name"
+            variant="standard"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="startTime"
+            name="start"
+            label="start time"
+            fullWidth
+            autoComplete="00:00"
+            variant="standard"
+            value={formData.hours.start}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="endTime"
+            name="end"
+            label="end time"
+            fullWidth
+            autoComplete="00:00pm"
+            variant="standard"
+            value={formData.hours.end}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="address1"
+            name="address1"
+            label="Address line 1"
+            fullWidth
+            autoComplete="shipping address-line1"
+            variant="standard"
+            value={formData.address1}
+            onChange={handleChange}
+          />
+        </Grid>
+        
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="city"
+            name="city"
+            label="City"
+            fullWidth
+            autoComplete="shipping address-level2"
+            variant="standard"
+            value={formData.city}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="state"
+            name="state"
+            label="State/Province/Region"
+            fullWidth
+            variant="standard"
+            value={formData.state}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="zip"
+            name="zip"
+            label="Zip / Postal code"
+            fullWidth
+            autoComplete="shipping postal-code"
+            variant="standard"
+            value={formData.zip}
+            onChange={handleChange}
+          />
+        </Grid>
+        {/* <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="country"
+            name="country"
+            label="Country"
+            fullWidth
+            autoComplete="shipping country"
+            variant="standard"
+          />
+        </Grid> */}
+        <Grid item xs={12}>
+          <TextField
+            id="img"
+            name="img"
+            label="Image Link"
+            fullWidth
+            autoComplete="link"
+            variant="standard"
+            value={formData.img}
+            onChange={handleChange}
+          />
+        </Grid>
+        
+        <Button
+            variant="contained"
+            type='submit'
+            onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+      </Grid>
+    </form>
   );
 }
 

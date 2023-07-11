@@ -6,20 +6,24 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
+import { Button } from '@mui/material';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import Divider from '@mui/material/Divider';
 import { useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from "../context/primaryContext";
 
 const User = () => {
 
-    const {loggedInUser} = useContext(PrimaryContext)
+    const {loggedInUser, setIsLoggedIn} = useContext(PrimaryContext)
 
     if (Object.keys(loggedInUser).length === 0) {
         return (
             <p>Log in to view user page.</p>
         )
     }
+
+    const navigate = useNavigate()
 
   return (
     <List
@@ -49,6 +53,15 @@ const User = () => {
         <ListItemText primary="Username" secondary={loggedInUser.userName} />
       </ListItem>
       <Divider variant="inset" component="li" />
+      <Button
+        onClick={() => {
+            localStorage.clear();
+            setIsLoggedIn(false)
+            navigate('/')
+        }}
+      >
+        Logout
+      </Button>
       {/* <ListItem>
         <ListItemAvatar>
           <Avatar>
