@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
-import { PrimaryContext } from '../context/PrimaryContext';
+import { PrimaryContext } from "../context/primaryContext";
 import { useNavigate } from 'react-router-dom';
+import { Button } from "@mui/material";
 import './index.css'
 
 const Navbar = () => {
@@ -15,9 +16,15 @@ const Navbar = () => {
                 onClick={() => {navigate('/')}} 
             />
             <div id="buttons">
-                <button>Add Venue</button>
+                <button onClick={() => {navigate('/addVenue')}}>Add Venue</button>
                 <button>About</button>
-                {Object.keys(loggedInUser).length > 0 ? <p>Hey {loggedInUser.name}</p> : <button onClick={() => {navigate('/signIn')}}>Sign In</button>}
+                {Object.keys(loggedInUser).length > 0 ? 
+                    <Button
+                        onClick={() => {navigate('/user')}}
+                    >
+                        Hey {loggedInUser.name}
+                    </Button> : 
+                    <button onClick={() => {navigate('/signIn')}}>Sign In</button>}
                 
             </div>
         </div>

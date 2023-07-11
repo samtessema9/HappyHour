@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryContext } from '../context/PrimaryContext';
+import { PrimaryContext } from '../context/primaryContext';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -56,14 +56,15 @@ const SignIn = () => {
         console.log('error')
         setError('Invalid Credentials!')
     } else {
-        console.log('success')
+        console.log(response.data)
         setLoggedInUser(response.data.user)
+        localStorage.setItem('token', response.data.token)
         setError('')
-        navigate('/')
         setFormData({
           userName: '',
           password: ''
         })
+        navigate('/')
     }
   };
 

@@ -13,10 +13,22 @@ const getUsers = async (req, res) => {
 }
 
 
-const getUserById = async (req, res) => {
+const getUserWithToken = async (req, res) => {
     try {
-        const user = await Users.findById(req.params.id);
-        res.json(user);
+        const token = req.headers.authorization.split(' ')[1];
+        console.log(token)
+        
+        if (!token) {
+            return res.json({error: "please include a token"}).status(403)
+        }
+
+        const userId = jwt.verify(token, process.env.JWT_SECRET)
+        console.log(userId)
+
+        const user = await Users.findById(userId.id)
+
+        res.json(user)
+        
     }
     catch (err) {
         res.send(`could not find user.`)
@@ -100,9 +112,10 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     getUsers,
-    getUserById,
+    // getUserById,
     addUser,
     loginUser,
     editUser,
-    deleteUser
+    deleteUser,
+    getUserWithToken
 }
