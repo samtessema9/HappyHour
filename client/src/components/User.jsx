@@ -1,14 +1,7 @@
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Button, Divider} from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
-import { Button } from '@mui/material';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import Divider from '@mui/material/Divider';
 import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from "../context/primaryContext";

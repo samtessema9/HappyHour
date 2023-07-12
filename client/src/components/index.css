@@ -33,3 +33,9 @@ button {
     height: 40em;
     width: 45%;
 }
+
+#editUserForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}

@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import { PrimaryContext } from '../context/PrimaryContext';
+import { PrimaryContext } from '../context/primaryContext';
 import './index.css'
 import VenueCard from '../components/Card';
 // import venues from '../assets/testData'

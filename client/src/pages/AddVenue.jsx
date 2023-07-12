@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import './index.css'
 
 const AddVenue = () => {
-
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
       name: '',
       address1: '',
@@ -54,6 +55,20 @@ const AddVenue = () => {
       data: formattedData
     })
 
+    setFormData({
+      name: '',
+      address1: '',
+      city: '',
+      state: '',
+      zip: '',
+      img: '',
+      hours: {
+        start: '',
+        end: ''
+      }
+    })
+
+    navigate('/')
     console.log(response.data)
 
   }
@@ -152,17 +167,6 @@ const AddVenue = () => {
             onChange={handleChange}
           />
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid> */}
         <Grid item xs={12}>
           <TextField
             id="img"

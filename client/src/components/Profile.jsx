@@ -39,15 +39,16 @@ const Profile = () => {
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           <MenuItem value={10}
             onClick={() => {navigate('/user')}}
           >
             View Profile
           </MenuItem>
-          <MenuItem value={20}>Edit profile</MenuItem>
+          <MenuItem value={20}
+            onClick={() => {navigate('/editUser')}}
+          >
+            Edit Profile
+          </MenuItem>
           <MenuItem value={30} 
             onClick={() => {
                 localStorage.clear();
