@@ -1,6 +1,6 @@
 import {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryContext } from '../context/PrimaryContext';
+import { PrimaryContext } from '../context/primaryContext';
 import StarRating from './Rating';
 import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 
@@ -20,6 +20,7 @@ const VenueCard = ({venue}) => {
         alt="Image Alt Text"
         height="200"
         image={venue.img}
+        referrerPolicy='no-referrer'
       />
       <CardContent>
         <Typography variant="h5" component="div">

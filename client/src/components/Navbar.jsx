@@ -16,7 +16,17 @@ const Navbar = () => {
                 onClick={() => {navigate('/')}} 
             />
             <div id="buttons">
-                <button onClick={() => {navigate('/addVenue')}}>Add Venue</button>
+                <button 
+                    onClick={() => {
+                        if (isLoggedIn) {
+                            navigate('/addVenue')
+                        } else {
+                            navigate('/signIn')
+                        }
+                    }}
+                >
+                    Add Venue
+                </button>
                 <button>About</button>
                 {isLoggedIn ? 
                     <Button
