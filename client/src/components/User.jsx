@@ -5,11 +5,13 @@ import WorkIcon from '@mui/icons-material/Work';
 import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from "../context/primaryContext";
+import axios from 'axios';
 import "./index.css"
 
 const User = () => {
 
-    const {loggedInUser, setIsLoggedIn} = useContext(PrimaryContext)
+    const navigate = useNavigate()
+    const {loggedInUser, setIsLoggedIn, setLoggedInUser} = useContext(PrimaryContext)
 
     if (Object.keys(loggedInUser).length === 0) {
         return (
@@ -17,7 +19,21 @@ const User = () => {
         )
     }
 
-    const navigate = useNavigate()
+    const deleteAccount = async () => {
+      try {
+        const response = await axios({
+          url: `http://localhost:3001/users/${loggedInUser._id}`,
+          method: 'DELETE'
+        })
+        setLoggedInUser({})
+        setIsLoggedIn(false)
+        localStorage.clear();
+        navigate('/')
+      }
+      catch (err) {
+        console.log(err.message)
+      }
+    }
 
   return (
     <List
@@ -51,14 +67,9 @@ const User = () => {
         style={{marginTop: "2em"}}
         variant='contained'
         
-        onClick={() => {
-            localStorage.clear();
-            setIsLoggedIn(false)
-            navigate('/')
-        }}
-        
+        onClick={deleteAccount}    
       >
-        Logout
+        Delete Account
       </Button>
       {/*<Button
         style={{marginTop: "2em"}}

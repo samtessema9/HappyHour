@@ -38,7 +38,6 @@ const getUserWithToken = async (req, res) => {
 
 const addUser = async (req, res) => {
     try {
-        console.log(req.body)
         const user = req.body
 
         const existingUser = await Users.findOne({userName: user.userName})
@@ -101,11 +100,11 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const deletedUser = await Venues.findByIdAndDelete(req.params.id)
+        const deletedUser = await Users.findByIdAndDelete(req.params.id)
         res.json(deletedUser)
     }
     catch (err) {
-        res.send(`could not delete user.`)
+        res.send({error: `could not delete user.`})
     }
 }
 
