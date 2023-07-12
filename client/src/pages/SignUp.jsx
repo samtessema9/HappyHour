@@ -92,7 +92,7 @@ export default function SignUp() {
                 })
                 console.log(response.data)
 
-                navigate('/')
+                navigate('/signIn')
                 
                 setFormData({
                     name: '',

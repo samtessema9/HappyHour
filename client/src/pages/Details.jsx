@@ -1,10 +1,30 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Map from "../components/Map";
 import StarRating from '../components/Rating';
-import { PrimaryContext } from '../context/PrimaryContext';
+import { PrimaryContext } from '../context/primaryContext';
 
 const Details = () => {
-    const {currentVenue} = useContext(PrimaryContext)
+    const {currentVenue, setCurrentVenue} = useContext(PrimaryContext)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log('useEffect running')
+        // if (Object.keys(currentVenue).length < 1) {
+        //     console.log('navigate triggered')
+        //     navigate('/')
+        // }
+    }, [currentVenue])
+
+    if (Object.keys(currentVenue).length < 1) {
+        return ( 
+            <>
+                <p>No venue</p>
+                <button onClick={() => {navigate('/')}}>Go Home</button>
+            </>
+        )
+    }
+
 
     return ( 
         <div id="details">
