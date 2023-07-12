@@ -54,7 +54,7 @@ const User = () => {
         <ListItemText primary="Username" secondary={loggedInUser.userName} />
       </ListItem>
       <Divider variant="inset" component="li" />
-      <Button
+       <Button
         style={{marginTop: "2em"}}
         variant='contained'
         
@@ -67,6 +67,32 @@ const User = () => {
       >
         Logout
       </Button>
+      {/*<Button
+        style={{marginTop: "2em"}}
+        variant='contained'
+        
+        onClick={() => {
+            localStorage.clear();
+            setIsLoggedIn(false)
+            navigate('/')
+        }}
+        
+      >
+        Logout
+      </Button>
+      <Button
+        style={{marginTop: "2em"}}
+        variant='contained'
+        
+        onClick={() => {
+            localStorage.clear();
+            setIsLoggedIn(false)
+            navigate('/')
+        }}
+        
+      >
+        Logout
+      </Button> */}
       {/* <ListItem>
         <ListItemAvatar>
           <Avatar>

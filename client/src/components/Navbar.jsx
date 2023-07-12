@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { PrimaryContext } from "../context/primaryContext";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@mui/material";
+import Profile from "./Profile";
 import './index.css'
 
 const Navbar = () => {
@@ -28,14 +29,10 @@ const Navbar = () => {
                     Add Venue
                 </button>
                 <button>About</button>
-                {isLoggedIn ? 
-                    <Button
-                        onClick={() => {navigate('/user')}}
-                    >
-                        Hey {loggedInUser.name}
-                    </Button> : 
-                    <button onClick={() => {navigate('/signIn')}}>Sign In</button>}
-                
+                {isLoggedIn ?
+                    <Profile /> : 
+                    <button onClick={() => {navigate('/signIn')}}>Sign In</button>
+                }           
             </div>
         </div>
      );

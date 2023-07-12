@@ -62,7 +62,6 @@ const addUser = async (req, res) => {
 
 const loginUser = asyncHandler( async (req, res) => {
     try {
-        // console.log(req.body)
         const {userName, password} = req.body
   
         const user = await Users.findOne({userName: userName})
