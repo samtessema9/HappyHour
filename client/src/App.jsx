@@ -14,7 +14,7 @@ import AddVenue from './pages/AddVenue';
 
 
 function App() {
-  const {setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
+  const {isLoggedIn, loggedInUser, setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
 
   useEffect(() => {
     const getUser = async (token) => {
@@ -27,6 +27,7 @@ function App() {
         }
       })
       const user = response.data
+      console.log(user)
       setIsLoggedIn(true)
       setLoggedInUser(user)
     }
@@ -42,7 +43,7 @@ function App() {
   return (
     <>
       <Router>
-        <h2>Happy Hour</h2>
+        {isLoggedIn ? <h2>Hey, {loggedInUser.name}</h2> : <h2>Happy Hour</h2>}
         <Navbar />
         <hr />
         <Routes>

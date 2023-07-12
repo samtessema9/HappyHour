@@ -38,20 +38,23 @@ const getUserWithToken = async (req, res) => {
 
 const addUser = async (req, res) => {
     try {
-        const {userName, password, name} = req.body
+        console.log(req.body)
+        let user = req.body
 
-        const user = await Users.find({userName})
+        const existingUser = await Users.findOne({userName: user.userName})
+        console.log(existingUser)
 
-        if (user) {
+        if (existingUser) {
             return res.status(400).json({error: 'user already exists'})
         }
         
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(user.password, salt)
         user.password = hashedPassword;
+        console.log('password hashed')
 
         const newUser = await Users.create(user)
-
+        console.log('created user')
         res.json({user: newUser})
     }
     catch (err) {

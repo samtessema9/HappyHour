@@ -56,7 +56,7 @@ const SignIn = () => {
         console.log('error')
         setError('Invalid Credentials!')
     } else {
-        console.log(response.data)
+        console.log(response.data.user)
         setLoggedInUser(response.data.user)
         setIsLoggedIn(true)
         localStorage.setItem('token', response.data.token)
@@ -118,7 +118,7 @@ const SignIn = () => {
                 [e.target.name]: e.target.value
               })}
             />
-            {error.length > 0 && <span class="signInError">{error}</span>}
+            {error.length > 0 && <span className="signInError">{error}</span>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

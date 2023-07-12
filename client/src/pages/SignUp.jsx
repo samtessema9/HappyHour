@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -32,6 +33,7 @@ function Copyright(props) {
     const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -76,16 +78,22 @@ export default function SignUp() {
         event.preventDefault();
 
         const invalidForm = validateForm(formData)
+        console.log(formData)
+        console.log(invalidForm)
 
         if (!Object.keys(invalidForm).length > 0) {
             try {
                 delete formData.confirmPassword
+
                 const response = await axios({
                     url: 'http://localhost:3001/users/register',
                     method: 'POST',
                     data: formData
                 })
                 console.log(response.data)
+
+                navigate('/')
+                
                 setFormData({
                     name: '',
                     userName: '',
@@ -98,6 +106,7 @@ export default function SignUp() {
             }
 
         } else {
+            console.log('error')
             setErrors(invalidForm)
         }
 
