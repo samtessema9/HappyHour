@@ -86,7 +86,7 @@ export default function SignUp() {
                 delete formData.confirmPassword
 
                 const response = await axios({
-                    url: 'http://localhost:3001/users/register',
+                    url: 'https://happyhour-api.onrender.com/users/register',
                     method: 'POST',
                     data: formData
                 })

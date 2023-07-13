@@ -50,7 +50,7 @@ const AddVenue = () => {
     }
 
     const response = await axios({
-      url: 'http://localhost:3001/venues',
+      url: 'https://happyhour-api.onrender.com/venues',
       method: 'POST',
       data: formattedData
     })

@@ -13,7 +13,7 @@ const Home = () => {
     useEffect(() => {
         if (venues.length == 0) {
             axios({
-                url: 'http://localhost:3001/venues',
+                url: 'https://happyhour-api.onrender.com/venues',
                 method: 'GET'
             }).then(response => {
                 setVenues(response.data)

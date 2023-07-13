@@ -71,40 +71,6 @@ const User = () => {
       >
         Delete Account
       </Button>
-      {/*<Button
-        style={{marginTop: "2em"}}
-        variant='contained'
-        
-        onClick={() => {
-            localStorage.clear();
-            setIsLoggedIn(false)
-            navigate('/')
-        }}
-        
-      >
-        Logout
-      </Button>
-      <Button
-        style={{marginTop: "2em"}}
-        variant='contained'
-        
-        onClick={() => {
-            localStorage.clear();
-            setIsLoggedIn(false)
-            navigate('/')
-        }}
-        
-      >
-        Logout
-      </Button> */}
-      {/* <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <BeachAccessIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Vacation" secondary="July 20, 2014" />
-      </ListItem> */}
     </List>
   );
 }

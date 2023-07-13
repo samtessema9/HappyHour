@@ -28,7 +28,7 @@ const EditUser = () => {
         console.log(formData)
         try {
             const response = await axios({
-                url: `http://localhost:3001/users/${loggedInUser._id}`,
+                url: `https://happyhour-api.onrender.com/users/${loggedInUser._id}`,
                 method: 'PATCH',
                 data: formData
             })
