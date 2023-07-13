@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { PrimaryContext } from "../context/primaryContext";
+import { PrimaryContext } from "../context/PrimaryContext";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@mui/material";
 import Profile from "./Profile";

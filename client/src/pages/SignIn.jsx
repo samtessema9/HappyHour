@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PrimaryContext } from '../context/primaryContext';
+import { PrimaryContext } from '../context/PrimaryContext';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';

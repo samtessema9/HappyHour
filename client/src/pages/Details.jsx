@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { PrimaryContext } from '../context/primaryContext';
+import { PrimaryContext } from '../context/PrimaryContext';
 import Map from "../components/Map";
 import StarRating from '../components/Rating';
 

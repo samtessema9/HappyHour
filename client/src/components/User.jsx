@@ -4,7 +4,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import { PrimaryContext } from "../context/primaryContext";
+import { PrimaryContext } from "../context/PrimaryContext";
 import axios from 'axios';
 import "./index.css"
 

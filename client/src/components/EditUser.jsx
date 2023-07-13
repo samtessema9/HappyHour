@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PrimaryContext } from "../context/primaryContext";
+import { PrimaryContext } from "../context/PrimaryContext";
 import { Button } from "@mui/material";
 import axios from "axios";
 import './index.css';
@@ -48,6 +48,7 @@ const EditUser = () => {
                 <input 
                     type="text" 
                     name="name" 
+                    className="editUserInput"
                     value={formData.name}
                     onChange={handleChange} 
                 />
@@ -55,6 +56,7 @@ const EditUser = () => {
                 <input 
                     type="text" 
                     name="userName" 
+                    className="editUserInput"
                     value={formData.userName}
                     onChange={handleChange} 
                 />

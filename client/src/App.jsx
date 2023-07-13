@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { PrimaryContext } from './context/primaryContext';
+import { PrimaryContext } from './context/PrimaryContext';
 import axios from 'axios';
 import './App.css'
 import Home from './pages/Home'
