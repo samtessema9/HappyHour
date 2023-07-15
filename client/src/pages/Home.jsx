@@ -2,10 +2,8 @@ import {useState, useEffect, useContext} from 'react';
 import { PrimaryContext } from '../context/PrimaryContext';
 import './index.css'
 import VenueCard from '../components/Card';
-// import venues from '../assets/testData'
 import axios from 'axios';
 
-// console.log(venues)
 
 const Home = () => {
     const {venues, setVenues} = useContext(PrimaryContext)
@@ -27,7 +25,6 @@ const Home = () => {
 
     return ( 
         <div id="container">
-            {/* <Navbar /> */}
             <div id="search">
                 <h4></h4>
             </div>
