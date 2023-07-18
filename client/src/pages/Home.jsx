@@ -1,5 +1,6 @@
 import {useState, useEffect, useContext} from 'react';
 import { PrimaryContext } from '../context/PrimaryContext';
+import { useQuery } from '@tanstack/react-query';
 import './index.css'
 import VenueCard from '../components/Card';
 import axios from 'axios';
@@ -8,20 +9,23 @@ import axios from 'axios';
 const Home = () => {
     const {venues, setVenues} = useContext(PrimaryContext)
 
-    useEffect(() => {
-        if (venues.length == 0) {
-            axios({
+    const getVenues = useQuery({
+        queryKey: ['venues'],
+        queryFn: async () => {
+            const response = await axios({
                 url: 'https://happyhour-api.onrender.com/venues',
                 method: 'GET'
-            }).then(response => {
-                setVenues(response.data)
             })
-        } 
-    }, [])
+            console.log('useQuery ran')
+            setVenues(response.data)
 
-    if (venues.length == 0) {
-        return <h2>Loading...</h2>
-    }
+            return response.data
+        }
+    })
+
+    if (getVenues.isLoading) {
+        return <h3>Loading...</h3>
+    }  
 
     return ( 
         <div id="container">
