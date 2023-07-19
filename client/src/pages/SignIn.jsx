@@ -1,6 +1,7 @@
 import {useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryContext } from '../context/PrimaryContext';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -21,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         HappyHour
       </Link>{' '}
       {new Date().getFullYear()}
@@ -45,29 +46,39 @@ const SignIn = () => {
     password: ''
   })
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const signInFunction = async () => {
     const response = await axios({
-        url: 'https://happyhour-api.onrender.com/users/login',
-        method: 'POST',
-        data: formData
+      url: 'https://happyhour-api.onrender.com/users/login',
+      method: 'POST',
+      data: formData
     })
-    
-    if (response.data.error) {
-        console.log('error')
-        setError('Invalid Credentials!')
-    } else {
-        console.log(response.data.user)
-        setLoggedInUser(response.data.user)
-        setIsLoggedIn(true)
-        localStorage.setItem('token', response.data.token)
-        setError('')
+    return response.data
+  }
+
+  const signInRequest = useMutation({
+    mutationFn: signInFunction,
+
+    onSuccess: (data) => {
+      // console.log(`onSuccess:  ${data}`)
+      setIsLoggedIn(true)
+      setLoggedInUser(data.user)
+      localStorage.setItem('token', data.token)
+      setError('')
         setFormData({
           userName: '',
           password: ''
         })
         navigate('/')
+    },
+
+    onError: (err) => {
+      console/log(err)
     }
+  })
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    signInRequest.mutate()
   };
 
   return (
@@ -133,11 +144,6 @@ const SignIn = () => {
               Sign In
             </Button>
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
               <Grid item>
                 <Link id='signUpLink' href='/signUp' variant="body2">
                   {"Don't have an account? Sign Up"}

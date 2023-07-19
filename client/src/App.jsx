@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { PrimaryContext } from './context/PrimaryContext';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import './App.css'
 import Home from './pages/Home'
@@ -14,32 +15,31 @@ import AddVenue from './pages/AddVenue';
 import EditUser from './components/EditUser';
 
 
+
 function App() {
   const {isLoggedIn, loggedInUser, setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
 
-  useEffect(() => {
-    const getUser = async (token) => {
-      const url = 'http://localhost:3001/users'
-      const response = await axios({
-        method: 'GET',
-        url: url,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      const user = response.data
-      console.log(user)
-      setIsLoggedIn(true)
-      setLoggedInUser(user)
-    }
+  const fetchUser = async (token) => {
+    const url = 'https://happyhour-api.onrender.com/users'
+    const response = await axios({
+      method: 'GET',
+      url: url,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    setIsLoggedIn(true)
+    setLoggedInUser(response.data)
+    return response.data
+  }
 
-    const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token')
 
-    if (token) {
-      getUser(token)
-    }
-
-  }, [])
+  const getUser = useQuery({
+    queryKey: ['user'],
+    enabled: token ? true : false,
+    queryFn: () => fetchUser(token)
+  })
 
   return (
     <>
