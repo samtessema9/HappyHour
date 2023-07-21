@@ -59,7 +59,6 @@ const SignIn = () => {
     mutationFn: signInFunction,
 
     onSuccess: (data) => {
-      // console.log(`onSuccess:  ${data}`)
       setIsLoggedIn(true)
       setLoggedInUser(data.user)
       localStorage.setItem('token', data.token)
@@ -72,7 +71,7 @@ const SignIn = () => {
     },
 
     onError: (err) => {
-      console/log(err)
+      setError('Invalid credentials')
     }
   })
 

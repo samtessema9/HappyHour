@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PrimaryContext } from "../context/PrimaryContext";
+import {useMutation} from '@tanstack/react-query'
 import { Button } from "@mui/material";
 import axios from "axios";
 import './index.css';
@@ -23,22 +24,28 @@ const EditUser = () => {
         })
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        console.log(formData)
-        try {
+    const editUserRequest = useMutation({
+        mutationFn: async () => {
             const response = await axios({
                 url: `https://happyhour-api.onrender.com/users/${loggedInUser._id}`,
                 method: 'PATCH',
                 data: formData
             })
-            setLoggedInUser(response.data)
+            
+            return response.data
+        },
+        onSuccess: (data) => {
+            setLoggedInUser(data)
             navigate('/user')
+        },
+        onError: (err) => {
+            setError({errorMessage: err})
         }
-        catch (err) {
-            setError({errorMessage: err.message})
-            console.log(err.message)
-        }
+    })
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        editUserRequest.mutate()
     }
 
     return ( 

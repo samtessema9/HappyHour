@@ -16,7 +16,7 @@ import EditUser from './components/EditUser';
 
 
 
-function App() {
+const App = () => {
   const {isLoggedIn, loggedInUser, setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
 
   const fetchUser = async (token) => {
