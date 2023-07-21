@@ -19,7 +19,7 @@ const getUserWithToken = async (req, res) => {
         console.log(token)
         
         if (!token) {
-            return res.json({error: "please include a token"}).status(403)
+            return res.status(403).json({error: "please include a token"})
         }
 
         const userId = jwt.verify(token, process.env.JWT_SECRET)
@@ -31,7 +31,7 @@ const getUserWithToken = async (req, res) => {
         
     }
     catch (err) {
-        res.send(`could not find user.`)
+        return res.status(500).send(`could not find user.`)
     }
 }
 
@@ -55,18 +55,20 @@ const addUser = async (req, res) => {
         res.json({user: newUser})
     }
     catch (err) {
-        res.send(`could not create user.`)
+        return res.status(500).send(`could not create user.`)
     }
 }
 
 const loginUser = asyncHandler( async (req, res) => {
     try {
+        console.log('login attempt')
         const {userName, password} = req.body
   
         const user = await Users.findOne({userName: userName})
     
         if (!user) {
-            return res.json({error: "User not found"}).status(404)
+            console.log('user not found')
+            return res.status(404).json({ error: "User not found" });
         }
     
         const correctPassword = await bcrypt.compare(password, user.password)
@@ -81,7 +83,7 @@ const loginUser = asyncHandler( async (req, res) => {
         })
     }
     catch (err) {
-        res.json({error: err.message}).status(400)
+        return res.status(500).json({error: err.message})
     }
 
 })
@@ -93,7 +95,7 @@ const editUser = async (req, res) => {
         res.json(updatedUser)
     }
     catch (err) {
-        res.send(`could not edit user.`)
+        return res.status(500).send(`could not edit user.`)
     }
 }
 
@@ -104,7 +106,7 @@ const deleteUser = async (req, res) => {
         res.json(deletedUser)
     }
     catch (err) {
-        res.send({error: `could not delete user.`})
+        return res.status(500).send({error: `could not delete user.`})
     }
 }
 
