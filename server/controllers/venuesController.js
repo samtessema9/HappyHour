@@ -1,5 +1,6 @@
 const Venues = require('../models/Venues');
 
+
 const getVenues = async (req, res) => {
     const venues = await Venues.find();
     res.json(venues);
@@ -19,8 +20,10 @@ const getVenueById = async (req, res) => {
 
 const addVenue = async (req, res) => {
     try {
+        console.log(req.file)
+        console.log(req.body)
         const venue = req.body
-        const createdVenue = Venues.create(venue)
+        // const createdVenue = Venues.create(venue)
         res.send('Succesfully created venue');
     }
     catch (err) {

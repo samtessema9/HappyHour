@@ -8,6 +8,7 @@ import './index.css'
 
 const AddVenue = () => {
   const navigate = useNavigate()
+  let [uploadedFile, setUploadedFile] = useState(null)
   const [formData, setFormData] = useState({
       name: '',
       address1: '',
@@ -18,7 +19,8 @@ const AddVenue = () => {
       hours: {
         start: '',
         end: ''
-      }
+      },
+      menu: null
   })
 
   const handleChange = (e) => {
@@ -46,13 +48,24 @@ const AddVenue = () => {
       name: formData.name,
       img: formData.img,
       hours: formData.hours,
-      address: `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`
+      address: `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`,
+      menu: uploadedFile
     }
 
+    const dataToBeSent = new FormData()
+    dataToBeSent.append("name", formattedData.name)
+    dataToBeSent.append("img", formattedData.img)
+    dataToBeSent.append("hours", JSON.stringify(formattedData.hours))
+    dataToBeSent.append("address", formattedData.address)
+    dataToBeSent.append("menu", formattedData.menu)
+
+    console.log(dataToBeSent)
+    
+
     const response = await axios({
-      url: 'https://happyhour-api.onrender.com/venues',
+      url: 'http://localhost:3001/venues',
       method: 'POST',
-      data: formattedData
+      data: dataToBeSent
     })
 
     setFormData({
@@ -65,7 +78,8 @@ const AddVenue = () => {
       hours: {
         start: '',
         end: ''
-      }
+      },
+      menu: null
     })
 
     navigate('/')
@@ -74,7 +88,7 @@ const AddVenue = () => {
   }
 
   return (
-    <form id="add-form" onSubmit={handleSubmit}>
+    <form id="add-form" onSubmit={handleSubmit} enctype="multipart/form-data">
       <h3>Add Venue</h3>
       <Grid container spacing={3}>
         <Grid item xs={12} >
@@ -179,7 +193,17 @@ const AddVenue = () => {
             onChange={handleChange}
           />
         </Grid>
-        
+        <input 
+          type="file" 
+          onChange={(e) => {
+            console.log(typeof e.target.files[0])
+            // setFormData({
+            //   ...formData,
+            //   menu: e.target.files[0]
+            // })
+            setUploadedFile(e.target.files[0])
+          }} 
+        />
         <Button
             variant="contained"
             type='submit'
