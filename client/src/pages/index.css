@@ -38,7 +38,10 @@
     margin-top: 25px;
     box-sizing: border-box;
     padding: 0px 40px;
+}
 
+#details img {
+    margin-top: 2em;
 }
 
 #details h2 {

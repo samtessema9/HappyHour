@@ -8,7 +8,6 @@ import './index.css'
 
 const AddVenue = () => {
   const navigate = useNavigate()
-  let [uploadedFile, setUploadedFile] = useState(null)
   const [formData, setFormData] = useState({
       name: '',
       address1: '',
@@ -44,23 +43,16 @@ const AddVenue = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formattedData = {
-      name: formData.name,
-      img: formData.img,
-      hours: formData.hours,
-      address: `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`,
-      menu: uploadedFile
-    }
+
+    const address = `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`
 
     const dataToBeSent = new FormData()
-    dataToBeSent.append("name", formattedData.name)
-    dataToBeSent.append("img", formattedData.img)
-    dataToBeSent.append("hours", JSON.stringify(formattedData.hours))
-    dataToBeSent.append("address", formattedData.address)
-    dataToBeSent.append("menu", formattedData.menu)
-
-    console.log(dataToBeSent)
-    
+    dataToBeSent.append("name", formData.name)
+    dataToBeSent.append("img", formData.img)
+    dataToBeSent.append("hours.start", formData.hours.start)
+    dataToBeSent.append("hours.end", formData.hours.end)
+    dataToBeSent.append("address", address)
+    dataToBeSent.append("menu", formData.menu)
 
     const response = await axios({
       url: 'http://localhost:3001/venues',
@@ -197,11 +189,10 @@ const AddVenue = () => {
           type="file" 
           onChange={(e) => {
             console.log(typeof e.target.files[0])
-            // setFormData({
-            //   ...formData,
-            //   menu: e.target.files[0]
-            // })
-            setUploadedFile(e.target.files[0])
+            setFormData({
+              ...formData,
+              menu: e.target.files[0]
+            })
           }} 
         />
         <Button
