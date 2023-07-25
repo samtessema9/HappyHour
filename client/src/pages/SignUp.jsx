@@ -184,12 +184,6 @@ export default function SignUp() {
                     />
                     {errors.confirmPassword && <span class="error">{errors.confirmPassword}</span>}
                     </Grid>
-                    {/* <Grid item xs={12}>
-                    <FormControlLabel
-                        control={<Checkbox value="allowExtraEmails" color="primary" />}
-                        label="I want to receive inspiration, marketing promotions and updates via email."
-                    />
-                    </Grid> */}
                 </Grid>
                 <Button
                     type="submit"
@@ -202,7 +196,7 @@ export default function SignUp() {
                 </Button>
                 <Grid container justifyContent="center">
                     <Grid item>
-                    <Link href="/signIn" variant="body2">
+                    <Link href="/signIn" variant="body2" id="signInLink">
                         Already have an account? Sign in
                     </Link>
                     </Grid>

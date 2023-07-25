@@ -18,7 +18,8 @@ const AddVenue = () => {
       hours: {
         start: '',
         end: ''
-      }
+      },
+      menu: null
   })
 
   const handleChange = (e) => {
@@ -42,17 +43,21 @@ const AddVenue = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formattedData = {
-      name: formData.name,
-      img: formData.img,
-      hours: formData.hours,
-      address: `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`
-    }
+
+    const address = `${formData.address1}, ${formData.city}, ${formData.state} ${formData.zip}`
+
+    const dataToBeSent = new FormData()
+    dataToBeSent.append("name", formData.name)
+    dataToBeSent.append("img", formData.img)
+    dataToBeSent.append("hours.start", formData.hours.start)
+    dataToBeSent.append("hours.end", formData.hours.end)
+    dataToBeSent.append("address", address)
+    dataToBeSent.append("menu", formData.menu)
 
     const response = await axios({
       url: 'https://happyhour-api.onrender.com/venues',
       method: 'POST',
-      data: formattedData
+      data: dataToBeSent
     })
 
     setFormData({
@@ -65,7 +70,8 @@ const AddVenue = () => {
       hours: {
         start: '',
         end: ''
-      }
+      },
+      menu: null
     })
 
     navigate('/')
@@ -74,7 +80,7 @@ const AddVenue = () => {
   }
 
   return (
-    <form id="add-form" onSubmit={handleSubmit}>
+    <form id="add-form" onSubmit={handleSubmit} enctype="multipart/form-data">
       <h3>Add Venue</h3>
       <Grid container spacing={3}>
         <Grid item xs={12} >
@@ -179,7 +185,17 @@ const AddVenue = () => {
             onChange={handleChange}
           />
         </Grid>
-        
+        <input 
+          id="fileUpload"
+          type="file" 
+          onChange={(e) => {
+            console.log(typeof e.target.files[0])
+            setFormData({
+              ...formData,
+              menu: e.target.files[0]
+            })
+          }} 
+        />
         <Button
             variant="contained"
             type='submit'
