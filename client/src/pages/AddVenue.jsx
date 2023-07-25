@@ -55,7 +55,7 @@ const AddVenue = () => {
     dataToBeSent.append("menu", formData.menu)
 
     const response = await axios({
-      url: 'http://localhost:3001/venues',
+      url: '/venues',
       method: 'POST',
       data: dataToBeSent
     })
@@ -186,6 +186,7 @@ const AddVenue = () => {
           />
         </Grid>
         <input 
+          id="fileUpload"
           type="file" 
           onChange={(e) => {
             console.log(typeof e.target.files[0])

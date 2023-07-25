@@ -55,6 +55,7 @@
 
 #info img {
     width: 100%;
+    margin: 0px;
 }
 
 .error {
@@ -86,4 +87,12 @@
 
 #signUpLink {
     padding-left: 6em;
+}
+
+#menuImg {
+    margin-top: 3em;
+}
+
+#fileUpload {
+    margin-top: 2em;
 }

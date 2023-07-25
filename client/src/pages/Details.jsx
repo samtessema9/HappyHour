@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { PrimaryContext } from '../context/PrimaryContext';
-import getFileType from '../utils/getFileType';
 import Map from "../components/Map";
 import StarRating from '../components/Rating';
 
@@ -15,12 +14,21 @@ const Details = () => {
 
     const uint8Array = new Uint8Array(currentVenue.menu.data)
 
-    const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+    const blob = new Blob([uint8Array], { type: 'image/*' });
 
     // Create a URL for the Blob
     const imageUrl = URL.createObjectURL(blob);
     
     const [displayMenu, setDisplayMenu] = useState(false)
+
+    const scrollToSection = () => {
+        const section = document.getElementById('menuImg');
+
+        section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
+    };
 
     return ( 
         <div id="details">
@@ -33,11 +41,13 @@ const Details = () => {
                 <button 
                     onClick={(e) => {
                         setDisplayMenu(!displayMenu)
+                        scrollToSection()
                     }}
                 >
                     Menu
                 </button>
                 <img 
+                    id="menuImg"
                     src={imageUrl} 
                     style={{ display: displayMenu ? 'block' : 'none' }}
                 />
