@@ -1,4 +1,4 @@
-import {useState, useContext, useRef} from 'react'
+import {useState, useContext, useRef, useEffect} from 'react'
 import { PrimaryContext } from '../context/PrimaryContext';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
@@ -11,6 +11,8 @@ import DropDownItems from './Dropdown';
 
 const Filter = () => {
     const [searchText, setSearchText] = useState('')
+    const [showDropDown, setShowDropDown] = useState(false)
+    const searchBarRef = useRef(null); 
     const { venues } = useContext(PrimaryContext)
 
     const filteredVenues = venues.filter(venue => {
@@ -19,9 +21,21 @@ const Filter = () => {
         }
         return venue.name.toLowerCase().startsWith(searchText.toLowerCase())
     })
+
+    useEffect(() => {
+        const handleOutsideClick = event => {
+          if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+            setShowDropDown(false);
+          }
+        };
+    
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+          document.removeEventListener('click', handleOutsideClick);
+        };
+      }, []);
+    
     console.log({filteredVenues})
-
-
 
     return ( 
         <div id="searchArea">
@@ -33,10 +47,13 @@ const Filter = () => {
                     <MenuIcon />
                 </IconButton>
                 <InputBase
+                    ref={searchBarRef}
                     value={searchText}
                     onChange={(e) => {
+                        console.log(showDropDown)
                         setSearchText(e.target.value)
                     }}
+                    onClick={() => {setShowDropDown(true)}}
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search Venues"
                     inputProps={{ 'aria-label': 'search venues' }}
@@ -48,7 +65,7 @@ const Filter = () => {
                 
             </Paper>
             {
-                filteredVenues.length > 0 && 
+                filteredVenues.length > 0 && showDropDown &&
                 <DropDownItems array={filteredVenues} id="dropdown"/>
             }
         </div>

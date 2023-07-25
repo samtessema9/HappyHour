@@ -49,14 +49,13 @@ button {
     position: relative;
 }
 
-#dropdown {
-    
+#searchArea nav {
     position: absolute;
     top: 100%; /* Position the dropdown below the search bar (you can adjust this value as needed) */
     left: 0;
     
     /* Styling for the dropdown */
-    background-color: black;
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -64,3 +63,5 @@ button {
     overflow-y: auto; /* Enable vertical scrolling if the dropdown overflows */
     z-index: 9999; /* Set a */
 }
+
+
