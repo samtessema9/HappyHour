@@ -13,7 +13,7 @@ const Filter = () => {
     const [searchText, setSearchText] = useState('')
     const [showDropDown, setShowDropDown] = useState(false)
     const searchBarRef = useRef(null); 
-    const { venues } = useContext(PrimaryContext)
+    const { venues, setVenues } = useContext(PrimaryContext)
 
     const filteredVenues = venues.filter(venue => {
         if (!searchText.length) {
@@ -21,6 +21,11 @@ const Filter = () => {
         }
         return venue.name.toLowerCase().startsWith(searchText.toLowerCase())
     })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // setVenues(filteredVenues)
+    }
 
     useEffect(() => {
         const handleOutsideClick = event => {
@@ -42,6 +47,7 @@ const Filter = () => {
             <Paper
                 component="form"
                 sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+                onSubmit={handleSubmit}
             >
                 <IconButton sx={{ p: '10px' }} aria-label="menu">
                     <MenuIcon />
@@ -59,7 +65,7 @@ const Filter = () => {
                     inputProps={{ 'aria-label': 'search venues' }}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSubmit}>
                     <SearchIcon />
                 </IconButton>
                 

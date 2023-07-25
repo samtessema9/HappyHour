@@ -55,7 +55,7 @@ const AddVenue = () => {
     dataToBeSent.append("menu", formData.menu)
 
     const response = await axios({
-      url: '/venues',
+      url: 'https://happyhour-api.onrender.com/venues',
       method: 'POST',
       data: dataToBeSent
     })
