@@ -86,7 +86,12 @@
 }
 
 #signUpLink {
-    padding-left: 6em;
+    padding-left: 3em;
+    font-size: 1.1em;
+}
+
+#signInLink {
+    font-size: 1.1em;
 }
 
 #menuImg {

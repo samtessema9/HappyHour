@@ -44,3 +44,23 @@ button {
 .editUserInput {
     width: 10em
 }
+
+#searchArea {
+    position: relative;
+}
+
+#dropdown {
+    
+    position: absolute;
+    top: 100%; /* Position the dropdown below the search bar (you can adjust this value as needed) */
+    left: 0;
+    
+    /* Styling for the dropdown */
+    background-color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 200px; /* Set a maximum height for the dropdown to prevent it from covering everything */
+    overflow-y: auto; /* Enable vertical scrolling if the dropdown overflows */
+    z-index: 9999; /* Set a */
+}
