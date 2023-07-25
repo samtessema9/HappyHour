@@ -74,7 +74,7 @@ const loginUser = asyncHandler( async (req, res) => {
         const correctPassword = await bcrypt.compare(password, user.password)
 
         if (!correctPassword) {
-            return res.json({error: "Incorrect password"}).status(404)
+            return res.status(404).json({error: "Incorrect password"})
         } 
 
         res.json({
