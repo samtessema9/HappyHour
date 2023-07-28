@@ -39,6 +39,17 @@ button {
     display: flex;
     flex-direction: column;
     gap: 3em;
+    width: 30vw;
+    margin: 3em auto;
+}
+
+#editUserForm input {
+    margin: 0 auto;
+}
+
+#editUserForm button {
+    width: 20%;
+    margin: 0 auto;
 }
 
 .editUserInput {

@@ -17,6 +17,38 @@ const getVenueById = async (req, res) => {
     }
 }
 
+const filterVenues = async (req, res) => {
+    try {
+        const filters = {}
+
+        if ('start.time' in req.query) {
+            console.log('found start time')
+            filters['start.time'] = req.query['start.time']
+        }
+        if ('end.time' in req.query) {
+            console.log('found end time')
+            filters['end.time'] = req.query['end.time']
+        }
+        if ('rating' in req.query) {
+            console.log('found rating')
+            filters['rating'] = { $gte: req.query['rating'] }
+        }
+
+        const venues = await Venues.find(filters)
+
+        if (venues.length > 0) {
+            res.json(venues)
+        } else {
+            res.status(404).send('no venues found')
+        }
+
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).send('error: ' + err)
+    }
+}
+
 
 const addVenue = async (req, res) => {
     try {
@@ -58,6 +90,7 @@ const deleteVenue = async (req, res) => {
 module.exports = {
     getVenues,
     getVenueById,
+    filterVenues,
     addVenue,
     editVenue,
     deleteVenue
