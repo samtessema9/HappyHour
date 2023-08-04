@@ -7,11 +7,13 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import DropDownItems from './Dropdown';
+import Filter from './Filter'
 
 
 const Search = () => {
     const [searchText, setSearchText] = useState('')
     const [showDropDown, setShowDropDown] = useState(false)
+    const [showFilters, setShowFilters] = useState(false)
     const searchBarRef = useRef(null); 
     const { venues, setVenues } = useContext(PrimaryContext)
 
@@ -42,39 +44,48 @@ const Search = () => {
       }, []);
     
     console.log({filteredVenues})
+    
+    window.addEventListener('load', () => {
+        const filters = document.getElementById('filters')
+    })
 
     return ( 
-        <div id="searchArea">
-            <Paper
-                component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-                onSubmit={handleSubmit}
-            >
-                <IconButton sx={{ p: '10px' }} aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <InputBase
-                    ref={searchBarRef}
-                    value={searchText}
-                    onChange={(e) => {
-                        console.log(showDropDown)
-                        setSearchText(e.target.value)
-                    }}
-                    onClick={() => {setShowDropDown(true)}}
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search Venues"
-                    inputProps={{ 'aria-label': 'search venues' }}
-                />
-                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSubmit}>
-                    <SearchIcon />
-                </IconButton>
-                
-            </Paper>
-            {
-                filteredVenues.length > 0 && showDropDown &&
-                <DropDownItems array={filteredVenues} id="dropdown"/>
-            }
+        <div id='searchContainer'>
+            <div id="searchArea">
+                <Paper
+                    component="form"
+                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+                    onSubmit={handleSubmit}
+                >
+                    <IconButton sx={{ p: '10px' }} aria-label="menu" onClick={() => {          setShowFilters(!showFilters)
+                    filters.style.display = showFilters ? 'block' : 'none';
+                    }}>
+                        <MenuIcon />
+                    </IconButton>
+                    <InputBase
+                        ref={searchBarRef}
+                        value={searchText}
+                        onChange={(e) => {
+                            console.log(showDropDown)
+                            setSearchText(e.target.value)
+                        }}
+                        onClick={() => {setShowDropDown(true)}}
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search Venues"
+                        inputProps={{ 'aria-label': 'search venues' }}
+                    />
+                    <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                    <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSubmit}>
+                        <SearchIcon />
+                    </IconButton>
+                    
+                </Paper>
+                {
+                    filteredVenues.length > 0 && showDropDown &&
+                    <DropDownItems array={filteredVenues} id="dropdown"/>
+                }
+            </div>
+            <Filter />
         </div>
     );
 }
