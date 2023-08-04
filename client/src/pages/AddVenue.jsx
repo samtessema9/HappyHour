@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import TimePickerComponent from '../utils/TimePicker';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
@@ -80,7 +81,7 @@ const AddVenue = () => {
   }
 
   return (
-    <form id="add-form" onSubmit={handleSubmit} enctype="multipart/form-data">
+    <form id="add-form" onSubmit={handleSubmit} encType="multipart/form-data">
       <h3>Add Venue</h3>
       <Grid container spacing={3}>
         <Grid item xs={12} >
@@ -97,7 +98,7 @@ const AddVenue = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             required
             id="startTime"
             name="start"
@@ -107,10 +108,11 @@ const AddVenue = () => {
             variant="standard"
             value={formData.hours.start}
             onChange={handleChange}
-          />
+          /> */}
+          <TimePickerComponent />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             required
             id="endTime"
             name="end"
@@ -120,7 +122,8 @@ const AddVenue = () => {
             variant="standard"
             value={formData.hours.end}
             onChange={handleChange}
-          />
+          /> */}
+          <TimePickerComponent />
         </Grid>
         <Grid item xs={12}>
           <TextField

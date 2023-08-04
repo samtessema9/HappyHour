@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DropDownItems from './Dropdown';
 
 
-const Filter = () => {
+const Search = () => {
     const [searchText, setSearchText] = useState('')
     const [showDropDown, setShowDropDown] = useState(false)
     const searchBarRef = useRef(null); 
@@ -35,6 +35,7 @@ const Filter = () => {
         };
     
         document.addEventListener('click', handleOutsideClick);
+        
         return () => {
           document.removeEventListener('click', handleOutsideClick);
         };
@@ -79,6 +80,6 @@ const Filter = () => {
 }
 
  
-export default Filter;
+export default Search;
 
 
