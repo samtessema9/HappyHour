@@ -19,7 +19,9 @@ import EditUser from './components/EditUser';
 const App = () => {
   const {isLoggedIn, loggedInUser, setLoggedInUser, setIsLoggedIn} = useContext(PrimaryContext);
 
-  const fetchUser = async (token) => {
+  const token = localStorage.getItem('token')
+
+  const fetchUser = async () => {
     const url = 'https://happyhour-api.onrender.com/users'
     const response = await axios({
       method: 'GET',
@@ -28,17 +30,20 @@ const App = () => {
         Authorization: `Bearer ${token}`
       }
     })
-    setIsLoggedIn(true)
-    setLoggedInUser(response.data)
     return response.data
   }
-
-  const token = localStorage.getItem('token')
 
   const getUser = useQuery({
     queryKey: ['user'],
     enabled: token ? true : false,
-    queryFn: () => fetchUser(token)
+    queryFn: fetchUser,
+    onSuccess: (data) => {
+      setIsLoggedIn(true)
+      setLoggedInUser(data)
+    },
+    onError: (error) => {
+      console.log(error)
+    }
   })
 
   return (
