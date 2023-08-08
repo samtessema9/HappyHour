@@ -1,14 +1,17 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
+import { PrimaryContext } from '../context/PrimaryContext';
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios';
 
 
 const Filter = () => {
-
+    const {setVenues} = useContext(PrimaryContext)
+    const [searchFilteredData, setSearchFilteredData] = useState(false)
     const [formData, setFormData] = useState({
         startTime: '',
         endTime: '',
         rating: '',
-        distance: 100
+        distance: ''
     })
 
     const handleChange = (e) => {
@@ -17,7 +20,35 @@ const Filter = () => {
             ...formData,
             [name]: value
         })
+        
     }
+
+    const requestFilteredVenues = useQuery({
+        queryKey: ['filteredVenues'],
+        enabled: searchFilteredData ? true : false,
+        queryFn: async () => {
+            console.log('filter request ran')
+            let queries = ''
+            for (let query in formData) {
+                if (query) {
+                    queries += `${query}=${formData[query]}&`
+                }
+            }
+            const response = await axios({
+                url: `http://localhost:3001/venues/filter/?${queries.slice(0, queries.length - 1)}`,
+                method: 'GET'
+            })
+            
+            return response.data
+        },
+        onSuccess: (data) => {
+            setVenues(data)
+        },
+        onError: (err) => {
+            console.error(err)
+        }
+
+    })
 
     return ( 
         <div id='filters'>
@@ -51,7 +82,7 @@ const Filter = () => {
                 </select>
             </div>
             <div className="filter-group">
-                <label htmlFor="distance">Distance:</label>
+                <label htmlFor="distance">Distance(miles) :</label>
                 <input 
                     type="number" 
                     id="distance" 
@@ -60,7 +91,12 @@ const Filter = () => {
                     onChange={handleChange}
                 />
             </div>
-            <button type="button">Apply Filters</button>
+            <button 
+                type="button"
+                onClick={(e) => {setSearchFilteredData(true)}}
+            >
+                Apply Filters
+            </button>
         </div>
      );
 }

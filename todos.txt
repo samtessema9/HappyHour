@@ -1,0 +1,9 @@
+client 
+
+- refactor "AddVenue" and "SignUp" pages to use react-query
+
+- fix details page for venues without a menu
+
+- find solution for search submit 
+
+- add filtering mechanisms
