@@ -17,18 +17,6 @@ const Search = () => {
     const searchBarRef = useRef(null); 
     const { venues, setVenues } = useContext(PrimaryContext)
 
-    const filteredVenues = venues.filter(venue => {
-        if (!searchText.length) {
-            return false
-        }
-        return venue.name.toLowerCase().startsWith(searchText.toLowerCase())
-    })
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // setVenues(filteredVenues)
-    }
-
     useEffect(() => {
         const handleOutsideClick = event => {
           if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
@@ -43,11 +31,29 @@ const Search = () => {
         };
       }, []);
     
-    console.log({filteredVenues})
+    // console.log({filteredVenues})
     
     window.addEventListener('load', () => {
         const filters = document.getElementById('filters')
     })
+
+    if (venues.length == 0) {
+        return <></>
+    }
+
+    const filteredVenues = venues.filter(venue => {
+        if (!searchText.length) {
+            return false
+        }
+        return venue.name.toLowerCase().startsWith(searchText.toLowerCase())
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // setVenues(filteredVenues)
+    }
+
+
 
     return ( 
         <div id='searchContainer'>

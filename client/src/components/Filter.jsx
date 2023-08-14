@@ -1,17 +1,21 @@
 import {useState, useContext} from 'react';
 import { PrimaryContext } from '../context/PrimaryContext';
-import { useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import axios from 'axios';
 
 
 const Filter = () => {
     const {setVenues} = useContext(PrimaryContext)
-    const [searchFilteredData, setSearchFilteredData] = useState(false)
+
     const [formData, setFormData] = useState({
         startTime: '',
         endTime: '',
         rating: '',
-        distance: ''
+        distance: '',
+        userLocation: {
+            lan: null,
+            lon: null
+        }
     })
 
     const handleChange = (e) => {
@@ -23,40 +27,21 @@ const Filter = () => {
         
     }
 
-    // const userLocation = document.getElementById('location')
-
-    // userLocation.addEventListener('click', (e) => {
-    //     if ("geolocation" in navigator) {
-    //         navigator.geolocation.getCurrentPosition(
-    //           (position) => {
-    //             const latitude = position.coords.latitude;
-    //             const longitude = position.coords.longitude;
-    //             console.log("Latitude:", latitude);
-    //             console.log("Longitude:", longitude);
-    //           },
-    //           (error) => {
-    //             console.error("Error getting location:", error.message);
-    //           }
-    //         );
-    //       } else {
-    //         console.error("Geolocation is not supported by this browser.");
-    //       }
-    // })
-
-    const requestFilteredVenues = useQuery({
-        queryKey: ['filteredVenues'],
-        enabled: searchFilteredData ? true : false,
-        queryFn: async () => {
+    const requestFilteredVenues = useMutation({
+        mutationFn: async () => {
             console.log('filter request ran')
-            let queries = ''
+            let queries = {}
             for (let query in formData) {
-                if (query) {
-                    queries += `${query}=${formData[query]}&`
+                if (formData[query] !== '') {
+                    queries[query] = formData[query]
                 }
             }
+            console.log(queries)
+
             const response = await axios({
-                url: `http://localhost:3001/venues/filter/?${queries.slice(0, queries.length - 1)}`,
-                method: 'GET'
+                url: `http://localhost:3001/venues/filter/`,
+                method: 'Post',
+                data: queries
             })
             
             return response.data
@@ -115,6 +100,13 @@ const Filter = () => {
                               (position) => {
                                 const latitude = position.coords.latitude;
                                 const longitude = position.coords.longitude;
+                                setFormData({
+                                    ...formData,
+                                    userLocation: {
+                                        lan: latitude,
+                                        lon: longitude
+                                    }
+                                })
                                 console.log("Latitude:", latitude);
                                 console.log("Longitude:", longitude);
                               },
@@ -130,7 +122,9 @@ const Filter = () => {
             </div>
             <button 
                 type="button"
-                onClick={(e) => {setSearchFilteredData(true)}}
+                onClick={(e) => {
+                    requestFilteredVenues.mutate()
+                }}
             >
                 Apply Filters
             </button>

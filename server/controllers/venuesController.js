@@ -20,18 +20,19 @@ const getVenueById = async (req, res) => {
 const filterVenues = async (req, res) => {
     try {
         const filters = {}
+        console.log(req.body)
 
-        if ('start.time' in req.query) {
+        if ('start.time' in req.body) {
             console.log('found start time')
-            filters['start.time'] = req.query['start.time']
+            filters['start.time'] = req.body['start.time']
         }
-        if ('end.time' in req.query) {
+        if ('end.time' in req.body) {
             console.log('found end time')
-            filters['end.time'] = req.query['end.time']
+            filters['end.time'] = req.body['end.time']
         }
-        if ('rating' in req.query) {
+        if ('rating' in req.body) {
             console.log('found rating')
-            filters['rating'] = { $gte: req.query['rating'] }
+            filters['rating'] = { $gte: req.body['rating'] }
         }
 
         const venues = await Venues.find(filters)
