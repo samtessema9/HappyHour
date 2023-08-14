@@ -8,9 +8,9 @@ const handleFileUpload = require('../middleware/upload')
 
 router.get('/', getVenues);
 
-router.get('/filter', filterVenues);
-
 router.get('/:id', getVenueById);
+
+router.post('/filter', filterVenues);
 
 router.post('/', handleFileUpload, addVenue);
 

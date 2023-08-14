@@ -19,6 +19,7 @@ const getVenueById = async (req, res) => {
 
 const filterVenues = async (req, res) => {
     try {
+        console.log('request for filtered venues received.')
         const filters = {}
         console.log(req.body)
 

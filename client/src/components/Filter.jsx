@@ -47,6 +47,7 @@ const Filter = () => {
             return response.data
         },
         onSuccess: (data) => {
+            console.log(data)
             setVenues(data)
         },
         onError: (err) => {
