@@ -15,7 +15,7 @@ const Filter = () => {
         rating: '',
         distance: '',
         userLocation: {
-            lan: null,
+            lat: null,
             lon: null
         }
     })

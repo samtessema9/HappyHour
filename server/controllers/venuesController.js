@@ -20,6 +20,7 @@ const getVenueById = async (req, res) => {
 const filterVenues = async (req, res) => {
     try {
         console.log('request for filtered venues received.')
+        console.log(req.body)
         const filters = {}
 
         if ('startTime' in req.body) {
@@ -36,7 +37,7 @@ const filterVenues = async (req, res) => {
         }
         console.log(filters)
         const venues = await Venues.find(filters)
-        console.log(venues)
+        // console.log(venues)
 
         if (venues.length > 0) {
             res.json(venues)
