@@ -21,22 +21,22 @@ const filterVenues = async (req, res) => {
     try {
         console.log('request for filtered venues received.')
         const filters = {}
-        console.log(req.body)
 
-        if ('start.time' in req.body) {
+        if ('startTime' in req.body) {
             console.log('found start time')
-            filters['start.time'] = req.body['start.time']
+            filters['start.time'] = { $lte: req.body.startTime}
         }
-        if ('end.time' in req.body) {
+        if ('endTime' in req.body) {
             console.log('found end time')
-            filters['end.time'] = req.body['end.time']
+            filters['end.time'] = { $gte: req.body.endTime}
         }
         if ('rating' in req.body) {
             console.log('found rating')
             filters['rating'] = { $gte: req.body['rating'] }
         }
-
+        console.log(filters)
         const venues = await Venues.find(filters)
+        console.log(venues)
 
         if (venues.length > 0) {
             res.json(venues)

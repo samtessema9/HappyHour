@@ -1,6 +1,8 @@
 import {useState, useContext} from 'react';
 import { PrimaryContext } from '../context/PrimaryContext';
 import { useMutation } from '@tanstack/react-query'
+import dayjs from 'dayjs';
+import moment from 'moment';
 import axios from 'axios';
 
 
@@ -30,17 +32,22 @@ const Filter = () => {
     const requestFilteredVenues = useMutation({
         mutationFn: async () => {
             console.log('filter request ran')
+            console.log(FormData)
             let queries = {}
             for (let query in formData) {
                 if (formData[query] !== '') {
-                    queries[query] = formData[query]
+                    if (query == "startTime" || query == "endTime") {
+                        queries[query] = moment(formData[query], "HH:mm").format("h:mmA")
+                    } else {
+                        queries[query] = formData[query]
+                    }
                 }
             }
             console.log(queries)
 
             const response = await axios({
                 url: `http://localhost:3001/venues/filter/`,
-                method: 'Post',
+                method: 'POST',
                 data: queries
             })
             
