@@ -17,38 +17,80 @@ const getVenueById = async (req, res) => {
     }
 }
 
+// const filterVenues = async (req, res) => {
+//     try {
+//         console.log('request for filtered venues received.')
+//         console.log(req.body)
+//         const filters = {}
+
+//         if ('startTime' in req.body) {
+//             console.log('found start time')
+//             filters['start.time'] = { $lte: req.body.startTime}
+//         }
+//         if ('endTime' in req.body) {
+//             console.log('found end time')
+//             filters['end.time'] = { $gte: req.body.endTime}
+//         }
+//         if ('rating' in req.body) {
+//             console.log('found rating')
+//             filters['rating'] = { $gte: req.body['rating'] }
+//         }
+//         // if ('distance' in req.body) {
+//         //     filters['distance'] = { $lte: Number(req.body['distance']) }
+//         // }
+//         console.log(filters)
+//         const venues = await Venues.find(filters)
+//         // console.log(venues)
+
+//         res.json(venues)
+
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500).send('error: ' + err)
+//     }
+// }
+
 const filterVenues = async (req, res) => {
     try {
-        console.log('request for filtered venues received.')
-        console.log(req.body)
-        const filters = {}
+        console.log('request for filtered venues received.');
+        console.log(req.body);
+        const filters = {};
 
         if ('startTime' in req.body) {
-            console.log('found start time')
-            filters['start.time'] = { $lte: req.body.startTime}
+            console.log('found start time');
+            filters['hours.start'] = { $lte: req.body.startTime };
         }
         if ('endTime' in req.body) {
-            console.log('found end time')
-            filters['end.time'] = { $gte: req.body.endTime}
+            console.log('found end time');
+            filters['hours.end'] = { $gte: req.body.endTime };
         }
         if ('rating' in req.body) {
-            console.log('found rating')
-            filters['rating'] = { $gte: req.body['rating'] }
+            console.log('found rating');
+            filters['rating'] = { $gte: parseInt(req.body.rating) };
         }
-        console.log(filters)
-        const venues = await Venues.find(filters)
-        // console.log(venues)
+        if ('distance' in req.body && 'userLocation' in req.body) {
+            console.log('found distance');
+            const userLat = parseFloat(req.body.userLocation.lat);
+            const userLon = parseFloat(req.body.userLocation.lon);
+            const distanceInMeters = parseFloat(req.body.distance) * 1000; // Convert km to meters
 
-        if (venues.length > 0) {
-            res.json(venues)
-        } else {
-            res.status(404).send('no venues found')
+            filters['address.lat'] = {
+                $lte: userLat + distanceInMeters / 111.12, // Approx. 1 degree of latitude is about 111.12 km
+                $gte: userLat - distanceInMeters / 111.12
+            };
+            filters['address.lon'] = {
+                $lte: userLon + (distanceInMeters / 111.12) / Math.cos(userLat * (Math.PI / 180)),
+                $gte: userLon - (distanceInMeters / 111.12) / Math.cos(userLat * (Math.PI / 180))
+            };
         }
-
-    }
-    catch (err) {
-        console.log(err)
-        res.status(500).send('error: ' + err)
+        
+        console.log(filters);
+        const venues = await Venues.find(filters);
+        res.json(venues);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('error: ' + err);
     }
 }
 

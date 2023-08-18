@@ -111,7 +111,7 @@ const Filter = () => {
                                 setFormData({
                                     ...formData,
                                     userLocation: {
-                                        lan: latitude,
+                                        lat: latitude,
                                         lon: longitude
                                     }
                                 })
