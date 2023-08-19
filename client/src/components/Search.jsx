@@ -91,7 +91,7 @@ const Search = () => {
                     <DropDownItems array={filteredVenues} id="dropdown"/>
                 }
             </div>
-            <Filter />
+            {/* <Filter /> */}
         </div>
     );
 }

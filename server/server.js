@@ -14,15 +14,15 @@ app.use(cors());
 
 app.use(express.json());
 
-// const Venue = require('./models/Venues')
-// app.put('/venues/updateMany', async (req, res) => {
-//     for (let venue of req.body) {
-//         await Venue.findByIdAndUpdate(venue._id, venue, {new: true})
-//     }
-//     // const updatedVenue = await Venue.findByIdAndUpdate(venue._id, venue, {new: true})
+const Venue = require('./models/Venues')
+app.put('/venues/updateMany', async (req, res) => {
+    for (let venue of req.body) {
+        await Venue.findByIdAndUpdate(venue._id, venue, {new: true})
+    }
+    // const updatedVenue = await Venue.findByIdAndUpdate(venue._id, venue, {new: true})
 
-//     res.send("done updating venues")
-// })
+    res.send("done updating venues")
+})
 
 app.use('/venues', require('./routes/venueRoutes'));
 

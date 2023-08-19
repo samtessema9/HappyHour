@@ -10,8 +10,8 @@ const venueSchema = new mongoose.Schema({
     },
     address: {
         address: {type: String, required: true},
-        lon: {type: String, required: true},
-        lat: {type: String, required: true}
+        lon: {type: Number, required: true},
+        lat: {type: Number, required: true}
     },
     phoneNumber: {type: Number},
     siteLink: {type: String},
