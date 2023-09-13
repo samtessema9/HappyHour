@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: String,
     userName: String,
-    password: String
+    password: String,
+    favoriteVenues: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Venue' }]
 }, 
     {
         timestamps: true,
