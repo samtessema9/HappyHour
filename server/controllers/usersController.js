@@ -90,8 +90,10 @@ const loginUser = asyncHandler( async (req, res) => {
 
 const editUser = async (req, res) => {
     try {
+        console.log(req.body)
         const updates = req.body
         const updatedUser = await Users.findByIdAndUpdate(req.params.id, updates, {new: true})
+        console.log(updatedUser)
         res.json(updatedUser)
     }
     catch (err) {

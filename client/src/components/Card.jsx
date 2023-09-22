@@ -14,21 +14,22 @@ const VenueCard = ({venue}) => {
 
 
   const updateUserFavorites = async ({ userId, venueId, isFavorite }) => {
+
     const updatedUser = {
       ...loggedInUser,
-      favoriteVenues: isFavorite
-        ? [...loggedInUser.favoriteVenues, venueId] // Add venueId to favorites
-        : loggedInUser.favoriteVenues.filter((id) => id !== venueId), // Remove venueId from favorites
+      favoriteVenues: isFavorite ? 
+        loggedInUser.favoriteVenues.filter((id) => id !== venueId): // Add venueId to favorites
+        [...loggedInUser.favoriteVenues, venueId], // Remove venueId from favorites
     };
 
-    const response = await axios.patch({
+    const response = await axios({
         url: `http://localhost:3001/users/${userId}`,
         method: 'PATCH',
         data: {
           favoriteVenues: updatedUser.favoriteVenues,
         }
     });
-
+    console.log(response.data);
     return response.data; 
   };
 
@@ -44,6 +45,7 @@ const VenueCard = ({venue}) => {
     },
 
     onSuccess: () => {
+      
       queryClient.invalidateQueries(['user', loggedInUser.id]);
     },
   });
@@ -51,7 +53,11 @@ const VenueCard = ({venue}) => {
   const handleToggleFavorite = (venueId) => {
     if (loggedInUser) {
       const isFavorite = loggedInUser.favoriteVenues.includes(venueId);
-      mutation.mutate({ userId: loggedInUser.id, venueId, isFavorite });
+      console.log(isFavorite)
+      mutation.mutate({ 
+        userId: loggedInUser._id, 
+        venueId: venueId, 
+        isFavorite });
     }
   };
 
