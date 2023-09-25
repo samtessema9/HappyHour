@@ -50,23 +50,27 @@ const EditUser = () => {
 
     return ( 
         <div>
+            <h3>Edit User Info</h3>
             <form onSubmit={handleSubmit} id="editUserForm">
-                <label>Name</label>
-                <input 
-                    type="text" 
-                    name="name" 
-                    className="editUserInput"
-                    value={formData.name}
-                    onChange={handleChange} 
-                />
-                <label>Username</label>
-                <input 
-                    type="text" 
-                    name="userName" 
-                    className="editUserInput"
-                    value={formData.userName}
-                    onChange={handleChange} 
-                />
+                <label>Name -
+                    <input 
+                        id="nameInput"
+                        type="text" 
+                        name="name" 
+                        className="editUserInput"
+                        value={formData.name}
+                        onChange={handleChange} 
+                    />
+                </label>
+                <label>Username - 
+                    <input 
+                        type="text" 
+                        name="userName" 
+                        className="editUserInput"
+                        value={formData.userName}
+                        onChange={handleChange} 
+                    />
+                </label>
                 {error.errorMessage && <p>{error.errorMessage}</p>}
                 <Button
                     type="submit"

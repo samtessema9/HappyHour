@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getVenues, getVenueById, addVenue, editVenue, deleteVenue } = require('../controllers/venuesController');
+const { getVenues, getVenueById, filterVenues, addVenue, editVenue, deleteVenue } = require('../controllers/venuesController');
 
 const handleFileUpload = require('../middleware/upload')
 
@@ -9,6 +9,8 @@ const handleFileUpload = require('../middleware/upload')
 router.get('/', getVenues);
 
 router.get('/:id', getVenueById);
+
+router.post('/filter', filterVenues);
 
 router.post('/', handleFileUpload, addVenue);
 

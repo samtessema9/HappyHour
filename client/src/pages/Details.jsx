@@ -9,6 +9,8 @@ const Details = () => {
   const [displayMenu, setDisplayMenu] = useState(false);
   let imageUrl = null;
 
+  console.log(currentVenue)
+
   if (Object.keys(currentVenue).length === 0) {
     return <Navigate to="/" />;
   }
@@ -41,7 +43,7 @@ const Details = () => {
         <p>
           {currentVenue.hours.start} - {currentVenue.hours.end}
         </p>
-        <p>{currentVenue.address}</p>
+        <p>{currentVenue.address.address}</p>
         {hasMenu && (
           <>
             <button
@@ -60,7 +62,7 @@ const Details = () => {
           </>
         )}
       </div>
-      <Map location={currentVenue.address} />
+      <Map location={currentVenue.address.address} />
     </div>
   );
 };

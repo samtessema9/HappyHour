@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import './index.css'
 import VenueCard from '../components/Card';
 import axios from 'axios';
+import Filter from '../components/Filter';
 
 
 const Home = () => {
@@ -24,7 +25,13 @@ const Home = () => {
     })
 
     if (getVenues.isLoading) {
-        return <h3>Loading...</h3>
+        return (
+            <>
+                <h3>Loading...</h3>
+                <Filter />
+            </>
+        )
+
     }  
 
     return ( 
@@ -34,9 +41,10 @@ const Home = () => {
             </div>
             <div id="cards">
                 {venues.map(venue => {
-                    return <VenueCard venue={venue} key={venue.address}/>
+                    return <VenueCard venue={venue} key={venue.name}/>
                 })}
             </div>
+            <Filter />
         </div>
      );
 }

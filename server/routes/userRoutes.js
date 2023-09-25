@@ -6,7 +6,7 @@ const { getUsers, getUserById, addUser, editUser, deleteUser, loginUser, getUser
 
 router.get('/', getUserWithToken);
 
-router.get('/:id', getUsers);
+router.get('/all', getUsers);
 
 router.post('/login', loginUser);
 

@@ -1,4 +1,5 @@
 const Venues = require('../models/Venues');
+const geolib = require('geolib');
 
 
 const getVenues = async (req, res) => {
@@ -14,6 +15,55 @@ const getVenueById = async (req, res) => {
     }
     catch (err) {
         return res.status(500).send(`could not find venue`)
+    }
+}
+
+const filterVenues = async (req, res) => {
+    try {
+        console.log('request for filtered venues received.');
+        console.log(req.body);
+        const filters = {};
+
+        if ('startTime' in req.body) {
+            console.log('found start time');
+            filters['hours.start'] = { $lte: req.body.startTime };
+        }
+        if ('endTime' in req.body) {
+            console.log('found end time');
+            filters['hours.end'] = { $gte: req.body.endTime };
+        }
+        if ('rating' in req.body) {
+            console.log('found rating');
+            filters['rating'] = { $gte: parseInt(req.body.rating) };
+        }
+
+        if ('distance' in req.body && 'userLocation' in req.body) {
+            console.log('found distance');
+            const userLat = parseFloat(req.body.userLocation.lat);
+            const userLon = parseFloat(req.body.userLocation.lon);
+            const distanceInMiles = parseFloat(req.body.distance);
+
+            // Convert distance in miles to degrees latitude and longitude
+            const degreeDistance = distanceInMiles / 69.0;
+
+            filters['address.lat'] = {
+                $lte: userLat + degreeDistance,
+                $gte: userLat - degreeDistance
+            };
+            filters['address.lon'] = {
+                $lte: userLon + degreeDistance / Math.cos(userLat * (Math.PI / 180)),
+                $gte: userLon - degreeDistance / Math.cos(userLat * (Math.PI / 180))
+            };
+        }
+
+        
+        console.log(filters);
+        const venues = await Venues.find(filters);
+        console.log(venues);
+        res.json(venues);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('error: ' + err);
     }
 }
 
@@ -58,6 +108,7 @@ const deleteVenue = async (req, res) => {
 module.exports = {
     getVenues,
     getVenueById,
+    filterVenues,
     addVenue,
     editVenue,
     deleteVenue
