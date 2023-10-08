@@ -28,6 +28,7 @@ const Filter = () => {
     };
 
     const handleApplyFilters = async () => {
+        let updatedFormData;
         if ("geolocation" in navigator) {
             try {
                 const position = await new Promise((resolve, reject) => {
@@ -37,7 +38,7 @@ const Filter = () => {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-                const updatedFormData = {
+                updatedFormData = {
                     ...formData,
                     userLocation: {
                         lat: latitude,
@@ -47,10 +48,15 @@ const Filter = () => {
 
                 setFormData(updatedFormData);
 
-                requestFilteredVenues.mutate(updatedFormData);
+                
             } catch (error) {
                 console.error("Error getting location:", error.message);
             }
+            finally {
+                requestFilteredVenues.mutate(updatedFormData);
+            }
+            
+
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
