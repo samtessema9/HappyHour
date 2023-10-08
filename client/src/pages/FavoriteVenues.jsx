@@ -14,7 +14,7 @@ const FavoriteVenues = () => {
       const venueRequests = venueIds.map(async (venueId) => {
         const response = await axios({
           method: 'get',
-          url: `http://localhost:3001/venues/${venueId}`,
+          url: `https://happyhour-api.onrender.com/venues/${venueId}`,
         });
         return response.data;
       });

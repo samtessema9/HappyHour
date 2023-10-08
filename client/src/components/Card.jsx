@@ -24,7 +24,7 @@ const VenueCard = ({venue}) => {
     };
 
     const response = await axios({
-        url: `http://localhost:3001/users/${userId}`,
+        url: `https://happyhour-api.onrender.com/users/${userId}`,
         method: 'PATCH',
         data: {
           favoriteVenues: updatedUser.favoriteVenues,
