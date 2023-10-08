@@ -144,9 +144,9 @@ const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link id='signUpLink' href='/signUp' variant="body2">
+                <a id='signUpLink' onClick={() => navigate('/signUp')}>
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </a>
               </Grid>
             </Grid>
           </Box>
