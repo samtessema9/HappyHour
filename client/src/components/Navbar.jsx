@@ -29,7 +29,17 @@ const Navbar = () => {
                 >
                     Add Venue
                 </button>
-                <button>About</button>
+                <button 
+                    onClick={() => {
+                        if (isLoggedIn) {
+                            navigate('/favoriteVenues')
+                        } else {
+                            navigate('/signIn')
+                        }
+                    }}
+                >
+                    Favorite Venues
+                </button>
                 {isLoggedIn ?
                     <Profile /> : 
                     <button onClick={() => {navigate('/signIn')}}>Sign In</button>

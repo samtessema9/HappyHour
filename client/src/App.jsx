@@ -13,7 +13,7 @@ import SignUp from './pages/SignUp';
 import User from './components/User';
 import AddVenue from './pages/AddVenue';
 import EditUser from './components/EditUser';
-
+import FavoriteVenues from './pages/FavoriteVenues';
 
 
 const App = () => {
@@ -60,6 +60,7 @@ const App = () => {
           <Route path="/user" element={<User />} />
           <Route path="/editUser" element={<EditUser />} />
           <Route path="/addVenue" element={<AddVenue />} />
+          <Route path="/favoriteVenues" element={<FavoriteVenues />} />
         </Routes>
       </Router>
 
