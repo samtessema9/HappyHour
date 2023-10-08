@@ -90,6 +90,10 @@
     font-size: 1.1em;
 }
 
+#signUpLink:hover {
+    cursor: pointer;
+}
+
 #signInLink {
     font-size: 1.1em;
 }
