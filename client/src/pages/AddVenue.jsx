@@ -98,31 +98,9 @@ const AddVenue = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          {/* <TextField
-            required
-            id="startTime"
-            name="start"
-            label="start time (00:00)"
-            fullWidth
-            autoComplete="00:00"
-            variant="standard"
-            value={formData.hours.start}
-            onChange={handleChange}
-          /> */}
           <TimePickerComponent />
         </Grid>
         <Grid item xs={12} sm={6}>
-          {/* <TextField
-            required
-            id="endTime"
-            name="end"
-            label="end time (00:00pm)"
-            fullWidth
-            autoComplete="00:00pm"
-            variant="standard"
-            value={formData.hours.end}
-            onChange={handleChange}
-          /> */}
           <TimePickerComponent />
         </Grid>
         <Grid item xs={12}>
@@ -176,19 +154,9 @@ const AddVenue = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="img"
-            name="img"
-            label="Image Link"
-            fullWidth
-            autoComplete="link"
-            variant="standard"
-            value={formData.img}
-            onChange={handleChange}
-          />
-        </Grid>
-        <input 
+        <Grid item xs={12} >
+          Upload Menu - &nbsp;&nbsp;
+          <input 
           id="fileUpload"
           type="file" 
           onChange={(e) => {
@@ -199,6 +167,9 @@ const AddVenue = () => {
             })
           }} 
         />
+        <hr/>
+        </Grid>
+        
         <Button
             variant="contained"
             type='submit'
