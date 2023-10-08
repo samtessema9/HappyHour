@@ -6,6 +6,7 @@ import StarRating from './Rating';
 import { Card, CardMedia, CardContent, Typography, Button, IconButton } from '@mui/material';
 import TurnedInSharpIcon from '@mui/icons-material/TurnedInSharp';
 import axios from 'axios';
+import './index.css'
 
 const VenueCard = ({venue}) => {
   const {setCurrentVenue, isLoggedIn, loggedInUser} = useContext(PrimaryContext);
@@ -72,6 +73,7 @@ const VenueCard = ({venue}) => {
         component="img"
         alt="Image Alt Text"
         height="200"
+        width="20"
         image={venue.img}
         referrerPolicy='no-referrer'
       />

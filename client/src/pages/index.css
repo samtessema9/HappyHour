@@ -101,3 +101,22 @@
 #fileUpload {
     margin-top: 2em;
 }
+
+.venue-list {
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 0PX 40PX;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px
+}
+
+.venue-list div {
+    width: 17em;
+    display: inline-block;
+}
+
+.MuiTypography-h5 {
+    text-align: left;
+    padding-left: 2.5em;
+}
